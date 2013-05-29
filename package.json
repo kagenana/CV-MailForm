@@ -1,0 +1,16 @@
+{
+  "name": "CV-MailForm",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.2.4",
+    "jade": "*",
+    "connect-flash": "*",
+    "connect-mongo": "*",
+    "mongoose": "*",
+    "stylus": "*"
+  }
+}

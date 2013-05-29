@@ -1,0 +1,17 @@
+extends login_layout
+
+block content
+  .container
+    .hero-unit
+      .row-fluid
+        .span9
+          h2 #{title} Login
+          h1= title
+        .span3
+          form(sction='/login')
+            input(type='text',name='id', placeholder='Account ID')
+            input(type='password', name='password', placeholder='Password')
+            label.checkbox.gray Keep Login Status
+              input(type='checkbox')
+            button.btn.btn-primary(type='submit') Login
+            
