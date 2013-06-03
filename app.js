@@ -9,6 +9,7 @@ var express = require('express'),
     path = require('path'),
     MongoStore = require('connect-mongo')(express);
 
+var flash = require('connect-flash');
 var app = express();
 
 // all environments
@@ -33,6 +34,7 @@ app.configure(function(){
       maxAge: new Date(Date.now() + 60 *60 * 1000)
     }
   }));
+  app.use(flash());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
