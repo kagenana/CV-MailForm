@@ -60,8 +60,8 @@ var loginCheck = function(req, res, next) {
 
 app.get('/', loginCheck, routes.index);
 app.get('/login', routes.login);
-app.get('/logout',routes.logout);
-app.get('/main',routes.main);
+app.get('/logout',loginCheck ,routes.logout);
+app.get('/main',loginCheck, routes.main);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
