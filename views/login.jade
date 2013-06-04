@@ -5,9 +5,12 @@ block content
     .hero-unit
       .row-fluid
         .span9
-          h2 #{title} Login
           h1= title
+          h2 Login
         .span3
+          - if(messages)
+              each message in messages
+                p= message 
           form(sction='/login')
             input(type='text',name='id', placeholder='Account ID')
             input(type='password', name='password', placeholder='Password')

@@ -19,18 +19,18 @@ exports.login = function(req, res){
     }
     if ((query.id == null) && (query.password == null)) {
       console.log("form is null!");
-      res.render('login', {title: TITLE, message: req.flash('alert')});
+      res.render('login', {title: TITLE});
     }
     else {
       if (data == "") {
-        req.flash('alert', 'Validation Error!');
+        req.session.messages = ["Validation Error!"];
         console.log("Validation Error!");
         res.redirect('/login');
       }
       else {
         console.log(data);
         req.session.user = id;
-        res.redirect('/');
+        res.redirect('/main');
       }
     }
   });
@@ -39,4 +39,8 @@ exports.login = function(req, res){
 exports.logout = function(req,res){
   req.session.destroy();
   res.redirect('/');
+};
+
+exports.main = function(req,res){
+  res.render('index', { title: TITLE });
 };

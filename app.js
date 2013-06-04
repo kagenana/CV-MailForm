@@ -34,7 +34,11 @@ app.configure(function(){
       maxAge: new Date(Date.now() + 60 *60 * 1000)
     }
   }));
-  app.use(flash());
+  app.use(function(req, res, next){
+    res.locals.messages = req.session.messages;
+    req.session.messages = null;
+    next();
+  });
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -57,6 +61,7 @@ var loginCheck = function(req, res, next) {
 app.get('/', loginCheck, routes.index);
 app.get('/login', routes.login);
 app.get('/logout',routes.logout);
+app.get('/main',routes.main);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
