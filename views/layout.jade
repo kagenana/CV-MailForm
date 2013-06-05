@@ -2,28 +2,31 @@ doctype 5
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
-    link(rel='stylesheet', href='/stylesheets/bootstrap-responsive.min.css')
-    link(rel='stylesheet', href='/stylesheets/todc-bootstrap.css')
-    script(src="/javascripts/jquery-1.10.0.min.js", type="txt/javascript")
-    script(src="/javascripts/jquery-ui-1.10.3.custom.min.js", type="txt/javascript")
-    script(src="/javascripts/bootstrap.min.js", type="txt/javascript")
+    link(rel="stylesheet", href="stylesheets/style.css" ,type="text/css")
+    link(rel="stylesheet", href="stylesheets/bootstrap.min.css" ,type="text/css")
+    link(rel="stylesheet", href="stylesheets/bootstrap-responsive.min.css" ,type="text/css")
+    link(rel="stylesheet", href="stylesheets/todc-bootstrap.css" ,type="text/css")
+    link(rel="stylesheet", href="stylesheets/jquery-ui.custom.min.css" ,type="text/css")
+    script(src="javascripts/jquery.min.js", type="txt/javascript")
+    script(src="javascripts/jquery-ui.custom.min.js", type="txt/javascript")
+    script(src="javascripts/jquery.validate.min.js", type="txt/javascript")
+    script(src="javascripts/bootstrap.min.js", type="txt/javascript")
   body
     .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
         .container
-          button.btn.btn-navbar(type='button',data-toggle='collapse',data-target='.nav-collapse')
+          button.btn.btn-navbar(type="button",data-toggle="collapse",data-target=".nav-collapse")
             span.icon-bar
             span.icon-bar
             span.icon-bar
           .nav-collapse.collapse
             ul.nav
               li.active
-                a(href='#') Home
+                a(href="#") Home
               li
-                a(href='/user') User
+                a(href="/user") User
               li
-                a(href='/admin') Admin
+                a(href="/admin") Admin
               li
-                a(href='/logout') Logout
+                a(href="/logout") Logout
     block content

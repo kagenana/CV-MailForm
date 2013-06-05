@@ -1,5 +1,4 @@
 var domain = 'localhost';
-
 var mongoose = require('mongoose');
 var url = 'mongodb://' + domain + '/CvMailForm';
 var db = mongoose.createConnection(url, function(err, res){

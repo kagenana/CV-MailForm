@@ -1,6 +1,5 @@
 var model = require('../models/user.js'),
     User = model.User;
-    
 var TITLE = 'CV-MailForm';
 
 exports.index = function(req, res){
@@ -8,39 +7,29 @@ exports.index = function(req, res){
 };
 
 exports.login = function(req, res){
-  var id = req.query.id;
-  var password = req.query.password;
-  
-  var query = { "id": id, "password": password };
+  res.render('login', { title: TITLE });
+};
 
-  User.find(query, function(err, data) {
-    if(err) {
-      console.log(err);
-    }
-    if ((query.id == null) && (query.password == null)) {
-      console.log("form is null!");
-      res.render('login', {title: TITLE});
+exports.signup = function(req, res){
+  User.findOne({
+    id: req.body.id,
+    password: req.body.password
+  },
+  function(err,obj){
+    if(obj){
+      req.session.id = req.body.id;
+      res.redirect('/');
     }
     else {
-      if (data == "") {
-        req.session.messages = ["Validation Error!"];
-        console.log("Validation Error!");
-        res.redirect('/login');
-      }
-      else {
-        console.log(data);
-        req.session.user = id;
-        res.redirect('/main');
-      }
+      console.log(err);
+      req.session.messages = ["Cannot Login."];
+      res.redirect('/login');
     }
   });
 };
 
+
 exports.logout = function(req,res){
   req.session.destroy();
-  res.redirect('/');
-};
-
-exports.main = function(req,res){
-  res.render('index', { title: TITLE });
+  res.redirect('/login');
 };
