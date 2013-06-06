@@ -1,28 +1,65 @@
-extends login_layout
-
-block content
-  .container
-    .hero-unit
-      .row-fluid
-        .span9
-          h1= title
-          h2 Login
-        .span3
-          - if(messages)
-              each message in messages
-                p= message 
-          form#loginForm(method="post", action="/signup")
-            input(type="text", name="id", placeholder="Account ID")
-            input(type="password", name="password", placeholder="Password")
-            label.checkbox.gray Keep Login
-              input(type="checkbox")
-            input.btn.btn-primary(type="submit", value="Login")
-          script(type="text/javascript")
-            $(function() {
-              $('#loginForm').validate({
-                rules : {
-                  'id' : { required: true },
-                  'password' : { required: true }
-                }
+doctype 5
+html
+  head
+    title= title
+    link(rel="stylesheet", href="stylesheets/style.css" ,type="text/css")
+    link(rel="stylesheet", href="stylesheets/bootstrap.min.css" ,type="text/css")
+    link(rel="stylesheet", href="stylesheets/bootstrap-responsive.min.css" ,type="text/css")
+    script(src="javascripts/jquery.min.js", type="text/javascript")
+    script(src="javascripts/jquery.validate.min.js", type="text/javascript")
+    script(src="javascripts/bootstrap.min.js", type="text/javascript")
+    style(type="text/css")
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+      }
+      .container-login {
+        top: 50%;
+        margin-top: 50px;
+      }
+      .form-login {
+        width: 300px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 40px;
+        padding-right: 40px;
+        margin: 0 auto;
+      }
+      .form-login-validate {
+        line-height: 15px;
+        font-size: 15px;
+      }
+  body
+    block content
+      .container.container-login
+        .hero-unit.form-login
+          h2= title
+          p Please login
+          .row-fluid
+            - if(messages)
+                each message in messages
+                  .alert.alert-error.form-login-validate
+                    button.close(data-dismiss="alert")&times;
+                    .form-login-validate= messages
+            form#loginForm(method="post", action="/signup")
+              input(type="text", name="id", placeholder="Account ID")
+              input(type="password", name="password", placeholder="Password")
+              label.checkbox Keep Login
+                input(type="checkbox")
+              input.btn.btn-primary(type="submit", value="Login")
+            script(type="text/javascript")
+              $(function() {
+                $('#loginForm').validate({
+                  rules : {
+                    'id' : { required: true },
+                    'password' : { required: true }
+                  },
+                  messages : {
+                    'id' : { required: "入力必須項目です。" },
+                    'password' : { required: "入力必須項目です。" }
+                  },
+                  errorElement: "label",
+                  errorClass: "alert alert-error"
+                });
               });
-            });
