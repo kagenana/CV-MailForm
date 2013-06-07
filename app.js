@@ -66,7 +66,8 @@ app.post('/signup', routes.signup);
 app.get('/logout', routes.logout);
 
 app.get('/admin/', loginCheck, admin.index);
-
+app.get('/admin/account', loginCheck, admin.account);
+app.get('/admin/server', loginCheck, admin.server);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
