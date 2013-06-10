@@ -51,7 +51,6 @@ app.configure('development', function(){
 });
 
 var loginCheck = function(req, res, next) {
-  console.log(req.session)
   if(req.session.id) {
     next();
   }
