@@ -5,7 +5,7 @@ var model = require('../models/db.js');
 var TITLE = 'CV-MailForm';
 
 exports.index = function(req, res){
-  res.render('index', { title: TITLE });
+  res.render('index', { title: TITLE, user: req.session.name});
 };
 
 exports.login = function(req, res){
@@ -20,6 +20,8 @@ exports.signup = function(req, res){
   function(err,obj){
     if(obj){
       req.session.id = req.body.id;
+      req.session.name = obj.id
+      req.session.userid = obj._id
       res.redirect('/');
     }
     else {

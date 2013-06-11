@@ -27,13 +27,13 @@ var ServerSchema = new mongoose.Schema({
 exports.Server = db.model('Server', ServerSchema);
 
 var UserSchema = new mongoose.Schema({
-  id: String,
-  mail: String,
-  name: String,
-  password: String,
-  isAdmin: Boolean,
-  isEnable: Boolean,
-  Description: String
+  id: { type: String, default: '', index: true},
+  mail: { type: String, default: '' },
+  name: { type: String, default: '' },
+  password: { type: String, default: '', index: true },
+  isAdmin: { type: Boolean, default: false },
+  isEnable: { type: Boolean, default: true },
+  Description: { type: String, default: '' }
 },{collection: 'users'});
 
 exports.User = db.model('User', UserSchema);

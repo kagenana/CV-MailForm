@@ -2,9 +2,32 @@ extends ../layout
 
 block content
   .container
-    .hero-unit
-      .row-fluid
-        .span9
-          h1= title
-          p Welcome to #{title}
+      h2 Account Management
+      form.form.horisontal#serverConf(method="post", action="/admin/account_edit")
+        table.table.table-bordered.table-striped.table-hover
+          caption CV-MailForm User Account List
+          thead
+            tr.table-bordered
+              th #
+              th.span1 id
+              th.span2 mail
+              th.span2 name
+              th.span1 isAdmin
+              th.span1 isEnable
+              th.span5 Description
+              th.span1
+                  button.btn.btn-primary.btn-mini(type="submit", name="_id", value="new") Create
+          tbody
+            for user, i in users
+              - var index = i +1
+              tr
+                td= index
+                td= users[i].id
+                td= users[i].mail
+                td= users[i].name
+                td= users[i].isAdmin
+                td= users[i].isEnable
+                td= users[i].Description
+                td
+                  button.btn.btn-success.btn-mini(type="submit", name="_id", value="#{users[i]._id}") Edit
   #container

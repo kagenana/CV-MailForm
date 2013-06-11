@@ -51,10 +51,11 @@ app.configure('development', function(){
 });
 
 var loginCheck = function(req, res, next) {
-  if(req.session.id) {
+  if(req.session.name) {
     next();
   }
   else {
+    req.session.destroy();
     res.redirect('/login');
   }
 };
@@ -66,7 +67,11 @@ app.get('/logout', routes.logout);
 
 app.get('/admin/', loginCheck, admin.index);
 app.get('/admin/account', loginCheck, admin.account);
+app.post('/admin/account_edit', loginCheck, admin.account_edit);
+app.post('/admin/account_conf', loginCheck, admin.account_conf);
+
 app.get('/admin/server', loginCheck, admin.server);
+app.post('/admin/server_conf', loginCheck, admin.server_conf)
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

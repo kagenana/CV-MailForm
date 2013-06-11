@@ -3,7 +3,7 @@ extends ../layout
 block content
   .container
       h2 Sever Configuration
-      form.form.horisontal
+      form.form.horisontal#serverConf(method="post", action="/admin/server_conf")
         table.table.table-bordered.table-striped.table-hover
           caption CV-MailForm Configuration in Databases
           thead
@@ -17,50 +17,50 @@ block content
               td 1
               td.control-label domain
               td.controls
-                input(type="text", id="inputDomain", placeholder="example.co.jp", style="margin-bottom: 0px;", value="#{domain}")
+                input(type="text", name="domain", placeholder="example.co.jp", style="margin-bottom: 0px;", value="#{servers[0].domain}")
               td システムのドメイン名を記載します。
             tr.control-group
               td 2
               td.control-label smtp_server
               td.controls
-                input(type="text", id="inputSMTPserver", placeholder="localhost", style="margin-bottom: 0px;", value="#{smtp_server}")
+                input(type="text", name="smtp_server", placeholder="localhost", style="margin-bottom: 0px;", value="#{servers[0].smtp_server}")
               td SMTPサーバ名またはIPアドレスを設定します。
             tr.control-group
               td 3
               td.control-label smtp_port
               td.controls
-                input(type="text", id="inputSMTPport", placeholder="localhost", style="margin-bottom: 0px;", value="#{smtp_port}")
+                input(type="text", name="smtp_port", placeholder="localhost", style="margin-bottom: 0px;", value="#{servers[0].smtp_port}")
               td SMTPサーバのポート番号を設定します。
             tr.control-group
               td 4
               td.control-label smtp_user
               td.controls
-                input(type="text", id="inputSMTPuser", placeholder="username", style="margin-bottom: 0px;", value="#{smtp_user}")
+                input(type="text", name="smtp_user", placeholder="username", style="margin-bottom: 0px;", value="#{servers[0].smtp_user}")
               td SMTP接続ユーザ名を設定します。（必要な場合）
             tr.control-group
               td 5
               td.control-label smtp_pass
               td.controls
-                input(type="text", id="inputSMTPpassword", placeholder="password", style="margin-bottom: 0px;", value="#{smtp_pass}")
+                input(type="text", name="smtp_pass", placeholder="password", style="margin-bottom: 0px;", value="#{servers[0].smtp_pass}")
               td SMTP接続パスワードを設定します。（必要な場合）
             tr.control-group
               td 6
               td.control-label mail_from
               td.controls
-                input(type="text", id="inputMailfrom", placeholder="noreply@example.co.jp", style="margin-bottom: 0px;", value="#{mail_from}")
+                input(type="text", name="mail_from", placeholder="noreply@example.co.jp", style="margin-bottom: 0px;", value="#{servers[0].mail_from}")
               td メール通知の送信元を設定します。
             tr.control-group
               td 7
               td.control-label mail_to
               td.controls
-                input(type="text", id="inputMailto", placeholder="admin@example.co.jp", style="margin-bottom: 0px;", value="#{mail_to}")
+                input(type="text", name="mail_to", placeholder="admin@example.co.jp", style="margin-bottom: 0px;", value="#{servers[0].mail_to}")
               td メール通知の送信先を設定します。
             tr.control-group
               td 8
               td.control-label mail_bcc_user
               td.controls
-                select(style="margin-bottom: 0px;")
-                  if mail_bcc_user
+                select(style="margin-bottom: 0px;", name="mail_bcc_user")
+                  if servers[0].mail_bcc_user
                     option(value="true", selected) True
                     option(value="false") False
                   else
@@ -71,8 +71,8 @@ block content
               td 9
               td.control-label mail_reply_to_user
               td.controls
-                select(style="margin-bottom: 0px;")
-                  if mail_reply_to_user
+                select(style="margin-bottom: 0px;", name="mail_reply_to_user")
+                  if servers[0].mail_reply_to_user
                     option(value="true", selected) True
                     option(value="false") False
                   else
@@ -83,27 +83,56 @@ block content
               td 10
               td.control-label send_to_min_before
               td.controls
-                input(type="text", id="inputSendToMin", placeholder="30", style="margin-bottom: 0px;", value="#{send_to_min_before}")
+                input(type="text", name="send_to_min_before", placeholder="30", style="margin-bottom: 0px;", value="#{servers[0].send_to_min_before}")
               td 何分前に送信するかを設定します。（指定単位：分）
             tr.control-group
               td 11
               td.control-label archive_of_day 
               td.controls
-                input(type="text", id="inputArchive", placeholder="365", style="margin-bottom: 0px;", value="#{archive_of_day}")
+                input(type="text", name="archive_of_day", placeholder="365", style="margin-bottom: 0px;", value="#{servers[0].archive_of_day}")
               td ログを何日間保存するかを指定します。（指定単位：日）
             tr.control-group
               td 12
               td.control-label mesage_template 
               td.controls.controls-row
-                textarea.span5(rows="10", id="inputMessage", placeholder="Message Body", style="margin-bottom: 0px;") #{mesage_template}
+                textarea.span5(rows="11", name="mesage_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].mesage_template}
               td メッセージテンプレートを指定します。
-                 pre
-                   |以下の変数で値を代入することが出来ます。
-                   |%user% ユーザ名（フルネーム）
-                   |%user_mail% ユーザのメールアドレス
-                   |%domain% システムのドメイン名
-                   |%p1%～%pn% フォームの入力内容
+                 p 以下の代入値を利用することが出来ます。
+                 table.table.table-bordered.table-striped
+                   caption 代入値一覧
+                   tbody
+                     tr
+                       td %user%
+                       td ユーザ名（フルネーム）
+                     tr
+                       td %user_mail%
+                       td ユーザのメールアドレス
+                     tr
+                       td %domain%
+                       td システムのドメイン名
+                     tr
+                       td %p1%～%pn%
+                       td フォーム項番の入力内容
         .control-group
           .controls
             button.btn.btn-primary(type="submit") Configure
+      script(type="text/javascript")
+        $(function() {
+          $('#serverConf').validate({
+            rules : {
+              'domain' : { required: true },
+              'smtp_server' : { required: true },
+              'smtp_port' : { required: true, number: true },
+              'smtp_user' : { minlength: 2 },
+              'smtp_pass' : { minlength: 6 },
+              'mail_from' : { required: true, email: true },
+              'mail_to' : { required: true, email: true },
+              'send_to_min_before' : { required: true, number: true },
+              'archive_of_day' : { required: true, number: true },
+              'mesage_template' : { required: true }
+            },
+            errorElement: "label",
+            errorClass: "alert alert-error"
+          });
+        });
   #container
