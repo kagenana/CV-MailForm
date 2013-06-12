@@ -20,7 +20,9 @@ exports.account = function(req, res){
 exports.account_edit = function(req, res){
   if (req.body._id == 'new') {
     var users = new User();
-    res.render('admin/account_edit', { title: TITLE, user: req.session.name, users: users });
+    var mode = "new";
+    var duplicate = "";
+    res.render('admin/account_edit', { title: TITLE, user: req.session.name, users: users, mode: mode, duplicate: duplicate });
   }
   else {
     User.findOne({
@@ -30,13 +32,14 @@ exports.account_edit = function(req, res){
       if(err){
         console.log(err);
       };
-      res.render('admin/account_edit', { title: TITLE, user: req.session.name, users: users });
+      var mode = "edit";
+      var duplicate = "";
+      res.render('admin/account_edit', { title: TITLE, user: req.session.name, users: users, mode: mode, duplicate: duplicate });
     });
   }
 };
 
 exports.account_conf = function(req, res){
-  console.log(req.body)
   User.findOne({
     _id: req.body._id,
   },
@@ -44,23 +47,92 @@ exports.account_conf = function(req, res){
     if(err){
       console.log(err);
     };
-    if (users) {
     
+    if (users) {
+        //update
+      var beforeAdmin = users.isAdmin;
+      var beforeEnable = users.isEnable;
+      users.id = users.id;
+      users.mail = req.body.mail;
+      users.name = req.body.name;
+      users.password = req.body.password;
+      users.isAdmin = req.body.isAdmin;
+      users.isEnable = req.body.isEnable;
+      users.Description = req.body.Description;
+      users.save();
+        //require relogin
+      if (req.session._id == users._id) {
+        if (beforeAdmin) {
+          if (users.isAdmin) {
+          }
+          else {
+            req.session.isAdmin = users.isAdmin;
+          };
+        };
+      };
+      
+        //require logout
+      if (req.session._id == users._id) {
+        if (beforeEnable) {
+          if (users.isEneble) {
+          }
+          else {
+            req.session.isEnable = users.isEnable;
+            req.session.messages = ["Account is disabled."];
+            res.redirect('/login');
+          };
+        };
+      };
+
+      if (req.session.isAdmin) {
+        res.redirect('admin/account');
+      }
+      else {
+        res.redirect('/');
+      };
     }
     else {
-     var users = new User();
-    }
-    users.id = req.body.id
-    users.mail = req.body.mail
-    users.name = req.body.name
-    users.password = req.body.password
-    users.isAdmin = req.body.isAdmin
-    users.isEnable = req.body.isEnable
-    users.Description = req.body.Description
-    users.save();
-    
+        //new
+      var users = new User();
+      users.id = req.body.id;
+      users.mail = req.body.mail;
+      users.name = req.body.name;
+      users.password = req.body.password;
+      users.isAdmin = req.body.isAdmin;
+      users.isEnable = req.body.isEnable;
+      users.Description = req.body.Description;
+        //new id check
+      User.findOne({
+        id: req.body.id,
+      },
+      function(err,obj){
+        if(err){
+          console.log(err);
+        };
+        if(obj){
+          var mode = "new";
+          var duplicate = "id is duplication.";
+          res.render('admin/account_edit', { title: TITLE, user: req.session.name, users: users, mode: mode, duplicate: duplicate });
+        }
+        else {
+          users.save();
+          res.redirect('admin/account');
+        };
+      });
+    };
+  });
+};
+
+exports.account_delete = function(req, res){
+  User.findOne({
+    _id: req.body._id,
+  },
+  function(err, users){
+    if(err){
+      console.log(err);
+    };
+    users.remove();
     res.redirect('admin/account');
-    
   });
 };
 

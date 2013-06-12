@@ -17,8 +17,15 @@ block content
               td 1
               td.control-label id
               td.controls
-                input(type="text", name="id", placeholder="user", style="margin-bottom: 0px;", value="#{users.id}")
+                if mode == "new"
+                  input(type="text", name="id", placeholder="user", style="margin-bottom: 0px;", value="#{users.id}")
+                else
+                  input(type="text", name="id", placeholder="user", style="margin-bottom: 0px;", value="#{users.id}", disabled, title="idは再設定できません。")
                 input(type="hidden", name="_id", placeholder="_id", style="margin-bottom: 0px;", value="#{users._id}")
+                if(duplicate)
+                  .alert.alert-error(style="margin-bottom: 0px; margin-top: 2px;")
+                    button.close(data-dismiss="alert")&times;
+                    p(style="margin-bottom: 0px;")= duplicate
               td ログインIDを設定します。
             tr.control-group
               td 2
@@ -43,26 +50,41 @@ block content
               td 5
               td.control-label isAdmin
               td.controls
-                select(style="margin-bottom: 0px;", name="isAdmin")
-                  if users.isAdmin
+                if users.id == "sysadmin"
+                  select(style="margin-bottom: 0px;", name="isAdmin", disabled, title="プリセット管理者は再設定できません。")
                     option(value="true", selected) True
-                    option(value="false") False
+                  input(type="hidden", name="isAdmin", placeholder="true", style="margin-bottom: 0px;", value="true")
+                else
+                  if isAdmin
+                    select(style="margin-bottom: 0px;", name="isAdmin")
+                      if users.isAdmin
+                        option(value="true", selected) True
+                        option(value="false") False
+                      else
+                        option(value="true") True
+                        option(value="false", selected) False
                   else
-                    option(value="true") True
-                    option(value="false", selected) False
+                    select(style="margin-bottom: 0px;", name="isAdmin", disabled, title="一般権限では操作できません。")
+                      option(value="false", selected) False
+                    input(type="hidden", name="isAdmin", placeholder="false", style="margin-bottom: 0px;", value="false")
               td 管理者に設定します。
             tr.control-group
               td 6
               td.control-label isEnable
               td.controls
-                select(style="margin-bottom: 0px;", name="isEnable")
-                  if users.isEnable
+                if users.id == "sysadmin"
+                  select(style="margin-bottom: 0px;", name="isEnable", disabled, title="プリセット管理者は再設定できません。")
                     option(value="true", selected) True
-                    option(value="false") False
-                  else
-                    option(value="true") True
-                    option(value="false", selected) False
-              td アカウントを無効にします。
+                  input(type="hidden", name="isEnable", placeholder="true", style="margin-bottom: 0px;", value="true")
+                else
+                  select(style="margin-bottom: 0px;", name="isEnable")
+                    if users.isEnable
+                      option(value="true", selected) True
+                      option(value="false") False
+                    else
+                      option(value="true") True
+                      option(value="false", selected) False
+              td アカウントを有効にします。
             tr.control-group
               td 7
               td.control-label Description

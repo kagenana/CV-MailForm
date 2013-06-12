@@ -36,6 +36,12 @@ app.configure(function(){
     }
   }));
   app.use(function(req, res, next){
+    res.locals._id = req.session._id;
+    res.locals.id = req.session.id;
+    res.locals.name = req.session.name;
+    res.locals.isAdmin = req.session.isAdmin;
+    res.locals.idEnable = req.session.isEnable;
+    
     res.locals.messages = req.session.messages;
     req.session.messages = null;
     next();
@@ -51,12 +57,28 @@ app.configure('development', function(){
 });
 
 var loginCheck = function(req, res, next) {
+  if(req.session.isEnable) {
+  }
+  else {
+    req.session.messages = ["Account is disabled."];
+    res.redirect('/login');
+  };
+  
   if(req.session.name) {
     next();
   }
   else {
     req.session.destroy();
     res.redirect('/login');
+  };
+};
+
+var adminCheck = function(req, res, next) {
+  if(req.session.isAdmin) {
+    next();
+  }
+  else {
+    res.redirect('/');
   }
 };
 
@@ -64,14 +86,17 @@ app.get('/', loginCheck, routes.index);
 app.get('/login', routes.login);
 app.post('/signup', routes.signup);
 app.get('/logout', routes.logout);
+app.post('/account', loginCheck, routes.account);
 
-app.get('/admin/', loginCheck, admin.index);
-app.get('/admin/account', loginCheck, admin.account);
-app.post('/admin/account_edit', loginCheck, admin.account_edit);
+app.get('/admin/', loginCheck, adminCheck, admin.index);
+app.get('/admin/account', loginCheck, adminCheck, admin.account);
+app.post('/admin/account_edit', loginCheck, adminCheck, admin.account_edit);
 app.post('/admin/account_conf', loginCheck, admin.account_conf);
+app.post('/admin/account_delete', loginCheck, adminCheck, admin.account_delete);
 
-app.get('/admin/server', loginCheck, admin.server);
-app.post('/admin/server_conf', loginCheck, admin.server_conf)
+
+app.get('/admin/server', loginCheck, adminCheck, admin.server);
+app.post('/admin/server_conf', loginCheck, adminCheck, admin.server_conf)
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

@@ -19,9 +19,11 @@ exports.signup = function(req, res){
   },
   function(err,obj){
     if(obj){
-      req.session.id = req.body.id;
-      req.session.name = obj.id
-      req.session.userid = obj._id
+      req.session._id = obj._id;
+      req.session.id = obj.id;
+      req.session.name = obj.name;
+      req.session.isAdmin = obj.isAdmin;
+      req.session.isEnable = obj.isEnable;
       res.redirect('/');
     }
     else {
@@ -36,3 +38,18 @@ exports.logout = function(req,res){
   req.session.destroy();
   res.redirect('/login');
 };
+
+exports.account = function(req, res){
+  User.findOne({
+      _id: req.body._id,
+    },
+  function(err, users){
+    if(err){
+      console.log(err);
+    };
+    var mode = "edit";
+    var duplicate = "";
+    res.render('account', { title: TITLE, user: req.session.name, users: users, mode: mode, duplicate: duplicate});
+  });
+};
+

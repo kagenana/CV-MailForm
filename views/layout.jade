@@ -22,29 +22,33 @@ html
                 a(href="/") Home
               li
                 a(href="/user/") User
-              li.dropdown
-                a(class="dropdown-toggle", id="dLabel", role="button", data-toggle="dropdown", data-target="#", href="admin/#") Admin
-                  b.caret
-                ul.dropdown-menu(role="menu", aria-labelledby="dLabel")
-                  li
-                    a(role="menuitem", tabindex="-1", href="/admin/account")
-                      i.icon-user
-                      |  Account Management
-                  li
-                    a(role="menuitem", tabindex="-1", href="/admin/server")
-                      i.icon-wrench
-                      |  Server Configuration
-                  li.divider(role="presentation")
-                  li
-                    a(role="menuitem", tabindex="-1", href="#VerInfo", data-toggle="modal")
-                      i.icon-info-sign
-                      |  Version Information
+              if (isAdmin)
+                li.dropdown
+                  a(class="dropdown-toggle", id="dLabel", role="button", data-toggle="dropdown", data-target="#", href="admin/#") Admin
+                    b.caret
+                  ul.dropdown-menu(role="menu", aria-labelledby="dLabel")
+                    li
+                      a(role="menuitem", tabindex="-1", href="/admin/account")
+                        i.icon-user
+                        |  Account Management
+                    li
+                      a(role="menuitem", tabindex="-1", href="/admin/server")
+                        i.icon-wrench
+                        |  Server Configuration
+                    li.divider(role="presentation")
+                    li
+                      a(role="menuitem", tabindex="-1", href="#VerInfo", data-toggle="modal")
+                        i.icon-info-sign
+                        |  Version Information
             ul.nav.pull-right
-              li
-                a(href="#")
+              li(style="text-align: right;")
+                a(role="menuitem", tabindex="-1", href="#", style="padding-right: 6px;")
                   i.icon-user.icon-white
-                  |  #{user}
-                
+              li
+                form.form.horisontal(method="post", action="/account", style="margin-top: 0px; margin-bottom: 0px; margin-top: 0px;padding-top: 4px;")
+                  .control-group(style=style="margin: 0px;")
+                    .control
+                      button.btn.btn-inverse.btn-mini(type="submit", name="_id", value="#{_id}") #{user}
               li
                 a(href="/logout")
                   i.icon-off.icon-white
