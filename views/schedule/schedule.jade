@@ -1,0 +1,42 @@
+extends ../layout
+
+block content
+  .container
+      h2 Active Schedule List
+      form.form.horisontal(method="post", action="/schedule/account_edit")
+        table.table.table-bordered.table-striped.table-hover
+          caption CV-MailForm Active Schedule List
+          .control-group
+            thead
+              tr.table-bordered
+                th #
+                th.span3 Subject
+                th.span5 Description
+                th.span3 Leaving Time
+                th.span3 Return Time
+                th.span1 State
+                th.span1 Edit
+                th.span1 Cancel
+                th.span1 Return
+            tbody
+              for schedule, i in schedules
+                - var index = i +1
+                tr
+                  td= index
+                  td= schedules[i].subject
+                  td= schedules[i].Description
+                  td= schedules[i].timeRequest
+                  td= schedules[i].timeReturn
+                  td
+                    if schedules[i].isState == "stack"
+                      span.label.label-info Que
+                    if schedules[i].isState == "send"
+                      span.label.label-info Send
+                    if schedules[i].isState == "calcel"
+                      span.label.label-info Cancel
+                    if schedules[i].isState == "return"
+                      span.label.label-info Return
+                  td
+                  td
+                  td
+  #container

@@ -1,0 +1,52 @@
+extends ../layout
+
+block content
+  .container
+      h2 Account Management
+      form.form.horisontal(method="post", action="/admin/account_edit")
+        table.table.table-bordered.table-striped.table-hover
+          caption CV-MailForm User Account List
+          .control-group
+            thead
+              tr.table-bordered
+                th #
+                th.span1 id
+                th.span2 mail
+                th.span3 name
+                th.span1 isAdmin
+                th.span1 isEnable
+                th.span5 Description
+                th(style="text-align: right")
+                  i.icon-plus-sign
+                th
+                  .controls
+                    button.btn.btn-primary.btn-mini(type="submit", name="_id", value="new") Create
+            tbody
+              for user, i in users
+                - var index = i +1
+                tr
+                  td= index
+                  td= users[i].id
+                  td= users[i].mail
+                  td= users[i].name
+                  td
+                    if users[i].isAdmin
+                      span.label.label-important Admin
+                    else
+                      span.label.label-info User
+                  td
+                    if users[i].isEnable
+                      span.label.label-info Enable
+                    else
+                      span.label.label-important Disable
+                  td= users[i].Description
+                  td
+                    .control
+                      button.btn.btn-success.btn-mini(type="submit", name="_id", value="#{users[i]._id}") Edit
+                  td
+                    if i>0
+                      form.form.horisontal(method="post", action="/admin/account_delete", style="margin: 0px; padding-top: 2px;")
+                        .control-group(style=style="margin: 0px;")
+                          .control
+                            button.btn.btn-danger.btn-mini(type="submit", name="_id", value="#{users[i]._id}") Delete
+  #container

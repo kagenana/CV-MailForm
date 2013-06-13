@@ -18,10 +18,25 @@ html
             span.icon-bar
           .nav-collapse.collapse
             ul.nav
-              li.active
-                a(href="/") Home
               li
-                a(href="/user/") User
+                a(href="/") Home
+              li.dropdown
+                a(class="dropdown-toggle", id="dLabel", role="button", data-toggle="dropdown", data-target="#", href="admin/#") Schedule
+                  b.caret
+                ul.dropdown-menu(role="menu", aria-labelledby="dLabel")
+                  li
+                    a(role="menuitem", tabindex="-1", href="/schedule/")
+                      i.icon-calendar
+                      |  Schedule List
+                  li
+                    a(role="menuitem", tabindex="-1", href="/schedule/input")
+                      i.icon-pencil
+                      |  Schedule Input
+                  li.divider(role="presentation")
+                  li
+                    a(role="menuitem", tabindex="-1", href="/schedule/archives")
+                      i.icon-briefcase
+                      |  Archives
               if (isAdmin)
                 li.dropdown
                   a(class="dropdown-toggle", id="dLabel", role="button", data-toggle="dropdown", data-target="#", href="admin/#") Admin

@@ -9,7 +9,7 @@ var users = [
     password: 'sysadmin',
     isAdmin: true,
     isEnable: true,
-    Description: 'Default Admin User'
+    Description: 'Preset Admin User'
     }
 ];
 

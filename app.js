@@ -6,6 +6,7 @@
 var express = require('express'),
     routes = require('./routes/index'),
     admin = require('./routes/admin'),
+    schedule = require('./routes/schedule'),
     http = require('http'),
     path = require('path'),
     MongoStore = require('connect-mongo')(express);
@@ -88,15 +89,19 @@ app.post('/signup', routes.signup);
 app.get('/logout', routes.logout);
 app.post('/account', loginCheck, routes.account);
 
+app.get('/schedule/', loginCheck, schedule.index);
+app.get('/schedule/input', loginCheck, schedule.input);
+app.post('/schedule/input_post', loginCheck, schedule.input_post);
+app.get('/schedule/archives', loginCheck, schedule.archives);
+
 app.get('/admin/', loginCheck, adminCheck, admin.index);
 app.get('/admin/account', loginCheck, adminCheck, admin.account);
 app.post('/admin/account_edit', loginCheck, adminCheck, admin.account_edit);
 app.post('/admin/account_conf', loginCheck, admin.account_conf);
 app.post('/admin/account_delete', loginCheck, adminCheck, admin.account_delete);
 
-
 app.get('/admin/server', loginCheck, adminCheck, admin.server);
-app.post('/admin/server_conf', loginCheck, adminCheck, admin.server_conf)
+app.post('/admin/server_conf', loginCheck, adminCheck, admin.server_conf);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

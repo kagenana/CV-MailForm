@@ -1,6 +1,7 @@
 var model = require('../models/db.js');
     User = model.User,
-    Server = model.Server;
+    Server = model.Server,
+    Schedule = model.Schedule;
 
 var TITLE = 'CV-MailForm';
 

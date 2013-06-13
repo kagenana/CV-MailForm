@@ -37,3 +37,17 @@ var UserSchema = new mongoose.Schema({
 },{collection: 'users'});
 
 exports.User = db.model('User', UserSchema);
+
+var ScheduleSchema = new mongoose.Schema({
+  author_id: { type: String, default: '', index: true},
+  subject: { type: String, default: ''},
+  author: { type: String, default: ''},
+  timeSubmit: { type: Date, default: Date.now },
+  timeRequest: { type: Date, default: Date.now },
+  timeReturn: { type: Date, default: Date.now },
+  isState: { type: String, default: '' },
+  Description: { type: String, default: '' },
+  mailBody: { type: String, default: '' }
+},{collection: 'schedule'});
+
+exports.Schedule = db.model('Schedule', ScheduleSchema);

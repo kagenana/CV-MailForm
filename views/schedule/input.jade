@@ -1,0 +1,54 @@
+extends ../layout
+
+block content
+  .container
+      h2 Schedule Imput
+      form.form.horisontal#scheduleImput(method="post", action="/schedule/input_post")
+        table.table.table-bordered.table-striped.table-hover
+          caption CV-MailForm Schedule Imput
+          thead
+            tr.table-bordered
+              th #
+              th.span2 Attribute
+              th.span5 Value
+              th.span5 Description
+          tbody
+            tr.control-group
+              td 1
+              td.control-label subject
+              td.controls
+                input(type="hidden", name="_id", placeholder="_id", style="margin-bottom: 0px;", value="#{schedules._id}")
+                input(type="text", name="subject", placeholder="Schedule Name", style="margin-bottom: 0px;", value="#{schedules.subject}")
+              td 予定名称を記載します。（自己識別用のため、内容は送信されません。）
+            tr.control-group
+              td 2
+              td.control-label Description
+              td.controls.controls-row
+                textarea.span5(rows="5", name="Description", placeholder="Description", style="margin-bottom: 0px;") #{schedules.Description}
+              td 特記事項がある場合、ここに記載します。（通知内容に追記されます。）
+            tr.control-group
+              td 3
+              td.control-label timeRequest
+              td.controls
+                input(type="text", name="timeRequest", placeholder="Date.now", style="margin-bottom: 0px;", value="#{schedules.timeRequest}")
+              td 外出予定時間を記載します。（30分前に送信されます。）
+            tr.control-group
+              td 4
+              td.control-label timeReturn
+              td.controls
+                input(type="text", name="timeReturn", placeholder="Date.now", style="margin-bottom: 0px;", value="#{schedules.timeReturn}")
+              td 帰社予定時間を記載します。
+        .control-group
+          .controls
+            button.btn.btn-primary(type="submit") Submit
+      script(type="text/javascript")
+        $(function() {
+          $('#scheduleImput').validate({
+            rules : {
+              'subject' : { required: true }
+            },
+            errorElement: "label",
+            errorClass: "alert alert-error"
+          });
+        });
+  #container
