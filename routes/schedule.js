@@ -13,17 +13,35 @@ exports.index = function(req, res){
     if(err){
       console.log(err);
     };
-    res.render('schedule/schedule', { title: TITLE, user: req.session.name, schedules: schedules });
+    var session = req.session;
+    res.render('schedule/schedule', { title: TITLE, session: session, schedules: schedules });
   });
 };
 
 exports.input = function(req, res){
-  var schedules = new Schedule();
-  res.render('schedule/input', { title: TITLE ,user: req.session.name ,schedules: schedules });
+  Schedule.findOne({
+    _id: req.body._id
+  },
+  function(err, schedules){
+    if(err){
+      console.log(err);
+    };
+    if (schedules) {
+        //edit
+      var session = req.session;
+      res.render('schedule/input', { title: TITLE, session: session ,schedules: schedules });
+    }
+    else {
+        //new
+      var schedules = new Schedule();
+      var session = req.session;
+      res.render('schedule/input', { title: TITLE, session: session ,schedules: schedules });
+    };
+  });
 };
 
 exports.input_post = function(req, res){
-  User.findOne({
+  Schedule.findOne({
     _id: req.body._id
   },
   function(err, schedules){
@@ -31,10 +49,20 @@ exports.input_post = function(req, res){
       console.log(err);
     };
     if(schedules){
-      //update
+        //update
+      schedules.author_id = req.session._id;
+      schedules.subject = req.body.subject;
+      schedules.author = req.session.id;
+        //schedules.timeSubmit = Date.now;
+      schedules.timeRequest = req.body.timeRequest;
+      schedules.timeReturn = req.body.timeReturn;
+      schedules.isState = req.body,isState;
+      schedules.Description = req.body.Description;
+        //schedules.mailBody = "";
+      schedules.save();
     }
     else {
-      //new
+        //new
       var schedules = new Schedule();
       schedules.author_id = req.session._id;
       schedules.subject = req.body.subject;
@@ -42,7 +70,7 @@ exports.input_post = function(req, res){
         //schedules.timeSubmit = Date.now;
       schedules.timeRequest = req.body.timeRequest;
       schedules.timeReturn = req.body.timeReturn;
-      schedules.isState = "stack";
+      schedules.isState = "que";
       schedules.Description = req.body.Description;
         //schedules.mailBody = "";
       schedules.save();
@@ -54,13 +82,14 @@ exports.input_post = function(req, res){
 
 exports.archives = function(req, res){
   Schedule.find({
-    _id: req.session._id
+    author_id: req.session._id
   },
   function(err, schedules){
     if(err){
       console.log(err);
     };
-    res.render('schedule/archives', { title: TITLE, user: req.session.name, schedules: schedules });
+    var session = req.session;
+    res.render('schedule/archives', { title: TITLE, session: session, schedules: schedules });
   });
 };
 

@@ -3,7 +3,50 @@ extends ../layout
 block content
   .container
       h2 Active Schedule List
-      form.form.horisontal(method="post", action="/schedule/account_edit")
+      if session.isState == "exist"
+        button.btn.btn-large.btn-primary.disabled(disabled, style="width: 500px;") Exist
+      if session.isState == "left"
+        button.btn.btn-large.btn-success.disabled(disabled, style="width: 500px;") Left
+      if session.isState == "goout"
+        button.btn.btn-large.btn-warning.disabled(disabled, style="width: 500px;") Go Out
+      table.table.table-bordered.table-striped.table-hover(style="width: 500px;, margin-bottom: 0px; margin-top: 3px;")
+          tbody
+            tr.table-bordered
+              td(style="text-align: center;")
+                if session.isState == "exist"
+                  button.btn.btn-success
+                    i.icon-pause.icon-white
+                    |   Left
+                else
+                  button.btn.btn-success(disabled)
+                    i.icon-pause
+                    |   Left
+              td(style="text-align: center;")
+                if session.isState == "exist"
+                  button.btn.btn-warning
+                    i.icon-stop.icon-white
+                    |   Go Out
+                else
+                  button.btn.btn-warning(disabled)
+                    i.icon-stop
+                    |   Go Out
+              td(style="text-align: center;")
+                form.form.horisontal(method="post", action="/schedule/input", style="margin-bottom: 0px;")
+                  .control-group(style="margin-bottom: 0px;")
+                    .control
+                      button.btn.btn-info
+                        i.icon-edit.icon-white
+                        |   Custom Input
+              td(style="text-align: center;")
+                if session.isState == "exist"
+                  button.btn.btn-primary(disabled)
+                    i.icon-play
+                    |   Exist
+                else
+                  button.btn.btn-primary
+                    i.icon-play.icon-white
+                    |   Exist
+      form.form.horisontal(method="post", action="/schedule/input")
         table.table.table-bordered.table-striped.table-hover
           caption CV-MailForm Active Schedule List
           .control-group
@@ -17,7 +60,6 @@ block content
                 th.span1 State
                 th.span1 Edit
                 th.span1 Cancel
-                th.span1 Return
             tbody
               for schedule, i in schedules
                 - var index = i +1
@@ -28,15 +70,28 @@ block content
                   td= schedules[i].timeRequest
                   td= schedules[i].timeReturn
                   td
-                    if schedules[i].isState == "stack"
-                      span.label.label-info Que
-                    if schedules[i].isState == "send"
-                      span.label.label-info Send
+                    if schedules[i].isState == "que"
+                      span.label.label-warning Que
+                    if schedules[i].isState == "sent"
+                      span.label.label-info Sent
                     if schedules[i].isState == "calcel"
-                      span.label.label-info Cancel
-                    if schedules[i].isState == "return"
-                      span.label.label-info Return
+                      span.label.label-danger Cancel
+                    if schedules[i].isState == "archive"
+                      span.label.label-inverse archive
                   td
+                    if schedules[i].isState == "que"
+                      form.form.horisontal(method="post", action="/schedule/input", style="margin-bottom: 0px;")
+                        .control-group(style="margin-bottom: 0px;")
+                          .control
+                            button.btn.btn-success.btn-mini Edit
+                    else
+                      button.btn.btn-success.btn-mini(disabled) Edit
                   td
-                  td
+                    if schedules[i].isState == "que"
+                      form.form.horisontal(method="post", action="/schedule/input", style="margin-bottom: 0px;")
+                        .control-group(style="margin-bottom: 0px;")
+                          .control
+                            button.btn.btn-danger.btn-mini Cancel
+                    else
+                      button.btn.btn-danger.btn-mini(disabled) Cancel
   #container

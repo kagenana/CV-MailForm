@@ -27,6 +27,8 @@ app.configure(function(){
   app.use(express.session({
     secret: 'secret',
     store: new MongoStore({
+      path: '/',
+      domain: 'conversion.co.jp',
       db: 'session',
       host: 'localhost',
       clear_interval: 60 * 60
@@ -37,13 +39,9 @@ app.configure(function(){
     }
   }));
   app.use(function(req, res, next){
-    res.locals._id = req.session._id;
-    res.locals.id = req.session.id;
-    res.locals.name = req.session.name;
-    res.locals.isAdmin = req.session.isAdmin;
-    res.locals.idEnable = req.session.isEnable;
-    
-    res.locals.messages = req.session.messages;
+    res.locals({
+      messages : req.session.messages
+    });
     req.session.messages = null;
     next();
   });
@@ -58,14 +56,12 @@ app.configure('development', function(){
 });
 
 var loginCheck = function(req, res, next) {
-  if(req.session.isEnable) {
-  }
-  else {
-    req.session.messages = ["Account is disabled."];
-    res.redirect('/login');
-  };
-  
-  if(req.session.name) {
+  if(req.session.id) {
+    req.session.touch();
+    if(!req.session.isEnable) {
+      req.session.messages = ["Account is disabled."];
+      res.redirect('/login');
+    };
     next();
   }
   else {
@@ -90,7 +86,7 @@ app.get('/logout', routes.logout);
 app.post('/account', loginCheck, routes.account);
 
 app.get('/schedule/', loginCheck, schedule.index);
-app.get('/schedule/input', loginCheck, schedule.input);
+app.post('/schedule/input', loginCheck, schedule.input);
 app.post('/schedule/input_post', loginCheck, schedule.input_post);
 app.get('/schedule/archives', loginCheck, schedule.archives);
 

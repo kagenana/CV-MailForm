@@ -6,7 +6,8 @@ var model = require('../models/db.js');
 var TITLE = 'CV-MailForm';
 
 exports.index = function(req, res){
-  res.render('index', { title: TITLE, user: req.session.name});
+  var session = req.session;
+  res.render('index', { title: TITLE, session: session });
 };
 
 exports.login = function(req, res){
@@ -21,10 +22,11 @@ exports.signup = function(req, res){
   function(err,obj){
     if(obj){
       req.session._id = obj._id;
-      req.session.id = obj.id;
+      req.session.userid = obj.id;
       req.session.name = obj.name;
       req.session.isAdmin = obj.isAdmin;
       req.session.isEnable = obj.isEnable;
+      req.session.isState = obj.isState;
       res.redirect('/');
     }
     else {
@@ -50,7 +52,8 @@ exports.account = function(req, res){
     };
     var mode = "edit";
     var duplicate = "";
-    res.render('account', { title: TITLE, user: req.session.name, users: users, mode: mode, duplicate: duplicate});
+    var session = req.session;
+    res.render('account', { title: TITLE, session: session, users: users, mode: mode, duplicate: duplicate});
   });
 };
 

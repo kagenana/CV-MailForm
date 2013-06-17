@@ -6,7 +6,7 @@ var model = require('../models/db.js');
 var TITLE = 'CV-MailForm Admin';
 
 exports.index = function(req, res){
-  res.render('admin/admin', { title: TITLE, user: req.session.name });
+  res.render('admin/admin', { title: TITLE, session: session });
 };
 
 exports.account = function(req, res){
@@ -14,7 +14,8 @@ exports.account = function(req, res){
     if(err){
       console.log(err);
     };
-    res.render('admin/account', { title: TITLE, user: req.session.name, users: users });
+    var session = req.session;
+    res.render('admin/account', { title: TITLE, session: session, users: users });
   });
 };
 
@@ -23,7 +24,8 @@ exports.account_edit = function(req, res){
     var users = new User();
     var mode = "new";
     var duplicate = "";
-    res.render('admin/account_edit', { title: TITLE, user: req.session.name, users: users, mode: mode, duplicate: duplicate });
+    var session = req.session;
+    res.render('admin/account_edit', { title: TITLE, session: session, users: users, mode: mode, duplicate: duplicate });
   }
   else {
     User.findOne({
@@ -35,7 +37,8 @@ exports.account_edit = function(req, res){
       };
       var mode = "edit";
       var duplicate = "";
-      res.render('admin/account_edit', { title: TITLE, user: req.session.name, users: users, mode: mode, duplicate: duplicate });
+      var session = req.session;
+      res.render('admin/account_edit', { title: TITLE, session: session, users: users, mode: mode, duplicate: duplicate });
     });
   }
 };
@@ -59,6 +62,7 @@ exports.account_conf = function(req, res){
       users.password = req.body.password;
       users.isAdmin = req.body.isAdmin;
       users.isEnable = req.body.isEnable;
+      users.isState = req.body.isState;
       users.Description = req.body.Description;
       users.save();
         //require relogin
@@ -101,6 +105,7 @@ exports.account_conf = function(req, res){
       users.password = req.body.password;
       users.isAdmin = req.body.isAdmin;
       users.isEnable = req.body.isEnable;
+      users.isState = req.body.isState;
       users.Description = req.body.Description;
         //new id check
       User.findOne({
@@ -113,7 +118,8 @@ exports.account_conf = function(req, res){
         if(obj){
           var mode = "new";
           var duplicate = "id is duplication.";
-          res.render('admin/account_edit', { title: TITLE, user: req.session.name, users: users, mode: mode, duplicate: duplicate });
+          var session = req.session;
+          res.render('admin/account_edit', { title: TITLE, session: session, users: users, mode: mode, duplicate: duplicate });
         }
         else {
           users.save();
@@ -142,7 +148,8 @@ exports.server = function(req, res){
     if(err){
       console.log(err);
     };
-    res.render('admin/server', { title: TITLE ,user: req.session.name ,servers: servers });
+    var session = req.session;
+    res.render('admin/server', { title: TITLE, session: session ,servers: servers });
   });
 };
 

@@ -4,11 +4,12 @@ var db = mongo.db('localhost:27017/CvMailForm');
 var users = [
   {
     id: 'sysadmin',
-    mail: 'sysadmin@localhost',
-    name: 'system admin',
+    mail: 'mailmaster@localhost',
+    name: 'System Admin',
     password: 'sysadmin',
     isAdmin: true,
     isEnable: true,
+    isState: true,
     Description: 'Preset Admin User'
     }
 ];
@@ -22,7 +23,7 @@ var server = [
     smtp_pass: '',
     mail_from: 'noreply@example.co.jp',
     mail_to: 'user@example.co.jp',
-    mail_bcc_user: false,
+    mail_bcc_user: true,
     mail_reply_to_user: true,
     send_to_min_before: '30',
     archive_of_day: '365',

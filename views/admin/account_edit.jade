@@ -22,6 +22,7 @@ block content
                 else
                   input(type="text", name="id", placeholder="user", style="margin-bottom: 0px;", value="#{users.id}", disabled, title="idは再設定できません。")
                 input(type="hidden", name="_id", placeholder="_id", style="margin-bottom: 0px;", value="#{users._id}")
+                input(type="hidden", name="_isState", placeholder="_isState", style="margin-bottom: 0px;", value="#{users._isState}")
                 if(duplicate)
                   .alert.alert-error(style="margin-bottom: 0px; margin-top: 2px;")
                     button.close(data-dismiss="alert")&times;
@@ -55,7 +56,7 @@ block content
                     option(value="true", selected) True
                   input(type="hidden", name="isAdmin", placeholder="true", style="margin-bottom: 0px;", value="true")
                 else
-                  if isAdmin
+                  if session.isAdmin
                     select(style="margin-bottom: 0px;", name="isAdmin")
                       if users.isAdmin
                         option(value="true", selected) True

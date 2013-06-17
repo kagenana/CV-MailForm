@@ -2,51 +2,40 @@ extends ../layout
 
 block content
   .container
-      h2 Account Management
-      form.form.horisontal(method="post", action="/admin/account_edit")
+      form.form.horisontal(method="post", action="/schedule/account_edit")
         table.table.table-bordered.table-striped.table-hover
-          caption CV-MailForm User Account List
+          caption CV-MailForm Schedule Archives
           .control-group
             thead
               tr.table-bordered
                 th #
-                th.span1 id
-                th.span2 mail
-                th.span3 name
-                th.span1 isAdmin
-                th.span1 isEnable
+                th.span3 Subject
                 th.span5 Description
-                th(style="text-align: right")
-                  i.icon-plus-sign
-                th
-                  .controls
-                    button.btn.btn-primary.btn-mini(type="submit", name="_id", value="new") Create
+                th.span3 Leaving Time
+                th.span3 Return Time
+                th.span1 State
+                th.span1 Edit
+                th.span1 Cancel
+                th.span1 Return
             tbody
-              for user, i in users
+              for schedule, i in schedules
                 - var index = i +1
                 tr
                   td= index
-                  td= users[i].id
-                  td= users[i].mail
-                  td= users[i].name
+                  td= schedules[i].subject
+                  td= schedules[i].Description
+                  td= schedules[i].timeRequest
+                  td= schedules[i].timeReturn
                   td
-                    if users[i].isAdmin
-                      span.label.label-important Admin
-                    else
-                      span.label.label-info User
+                    if schedules[i].isState == "que"
+                      span.label.label-info Que
+                    if schedules[i].isState == "sent"
+                      span.label.label-info Sent
+                    if schedules[i].isState == "calcel"
+                      span.label.label-info Cancel
+                    if schedules[i].isState == "archive"
+                      span.label.label-info Archive
                   td
-                    if users[i].isEnable
-                      span.label.label-info Enable
-                    else
-                      span.label.label-important Disable
-                  td= users[i].Description
                   td
-                    .control
-                      button.btn.btn-success.btn-mini(type="submit", name="_id", value="#{users[i]._id}") Edit
                   td
-                    if i>0
-                      form.form.horisontal(method="post", action="/admin/account_delete", style="margin: 0px; padding-top: 2px;")
-                        .control-group(style=style="margin: 0px;")
-                          .control
-                            button.btn.btn-danger.btn-mini(type="submit", name="_id", value="#{users[i]._id}") Delete
   #container

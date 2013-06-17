@@ -28,16 +28,12 @@ html
                     a(role="menuitem", tabindex="-1", href="/schedule/")
                       i.icon-calendar
                       |  Schedule List
-                  li
-                    a(role="menuitem", tabindex="-1", href="/schedule/input")
-                      i.icon-pencil
-                      |  Schedule Input
                   li.divider(role="presentation")
                   li
                     a(role="menuitem", tabindex="-1", href="/schedule/archives")
                       i.icon-briefcase
                       |  Archives
-              if (isAdmin)
+              if (session.isAdmin)
                 li.dropdown
                   a(class="dropdown-toggle", id="dLabel", role="button", data-toggle="dropdown", data-target="#", href="admin/#") Admin
                     b.caret
@@ -52,18 +48,33 @@ html
                         |  Server Configuration
                     li.divider(role="presentation")
                     li
+                      a(role="menuitem", tabindex="-1", href="/admin/archive")
+                        i.icon-wrench
+                        |  View Archives
+                    li.divider(role="presentation")
+                    li
                       a(role="menuitem", tabindex="-1", href="#VerInfo", data-toggle="modal")
                         i.icon-info-sign
                         |  Version Information
             ul.nav.pull-right
               li(style="text-align: right;")
                 a(role="menuitem", tabindex="-1", href="#", style="padding-right: 6px;")
-                  i.icon-user.icon-white
+                  if session.isState == "exist"
+                    i.icon-play.icon-white
+                  if session.isState == "left"
+                    i.icon-pause.icon-white
+                  if session.isState == "goout"
+                    i.icon-stop.icon-white
               li
                 form.form.horisontal(method="post", action="/account", style="margin-top: 0px; margin-bottom: 0px; margin-top: 0px;padding-top: 4px;")
                   .control-group(style=style="margin: 0px;")
                     .control
-                      button.btn.btn-inverse.btn-mini(type="submit", name="_id", value="#{_id}") #{user}
+                      if session.isState == "exist"
+                        button.btn.btn-primary.btn-mini(type="submit", name="_id", value="#{session._id}") #{session.name}
+                      if session.isState == "left"
+                        button.btn.btn-success.btn-mini(type="submit", name="_id", value="#{session._id}") #{session.name}
+                      if session.isState == "goout"
+                        button.btn.btn-warning.btn-mini(type="submit", name="_id", value="#{session._id}") #{session.name}
               li
                 a(href="/logout")
                   i.icon-off.icon-white

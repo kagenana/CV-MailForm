@@ -7,4 +7,14 @@ block content
         .span9
           h1= title
           p Welcome to #{title}
+          h3 Debug info
+      pre
+        p session_id :#{session.id}
+        p user_keyid :#{session._id}
+        p userid :#{session.userid}
+        p name :#{session.name}
+        p isAdmin :#{session.isAdmin}
+        p isEnable :#{session.isEnable}
+        p isState :#{session.isState}
+        p messages :#{session.messages}
   #container

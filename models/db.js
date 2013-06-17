@@ -33,6 +33,7 @@ var UserSchema = new mongoose.Schema({
   password: { type: String, default: '', index: true },
   isAdmin: { type: Boolean, default: false },
   isEnable: { type: Boolean, default: true },
+  isState: { type: String, default: 'exist' },
   Description: { type: String, default: '' }
 },{collection: 'users'});
 
