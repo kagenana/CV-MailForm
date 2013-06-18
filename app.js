@@ -56,7 +56,7 @@ app.configure('development', function(){
 });
 
 var loginCheck = function(req, res, next) {
-  if(req.session.id) {
+  if(req.session.name) {
     req.session.touch();
     if(!req.session.isEnable) {
       req.session.messages = ["Account is disabled."];
@@ -85,12 +85,13 @@ app.post('/signup', routes.signup);
 app.get('/logout', routes.logout);
 app.post('/account', loginCheck, routes.account);
 
-app.get('/schedule/', loginCheck, schedule.index);
+app.get('/schedule', loginCheck, schedule.index);
 app.post('/schedule/input', loginCheck, schedule.input);
 app.post('/schedule/input_post', loginCheck, schedule.input_post);
 app.get('/schedule/archives', loginCheck, schedule.archives);
+app.post('/schedule/chg_status', loginCheck, schedule.chg_status);
 
-app.get('/admin/', loginCheck, adminCheck, admin.index);
+app.get('/admin', loginCheck, adminCheck, admin.index);
 app.get('/admin/account', loginCheck, adminCheck, admin.account);
 app.post('/admin/account_edit', loginCheck, adminCheck, admin.account_edit);
 app.post('/admin/account_conf', loginCheck, admin.account_conf);

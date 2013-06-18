@@ -52,39 +52,33 @@ block content
               td.control-label isAdmin
               td.controls
                 if users.id == "sysadmin"
-                  select(style="margin-bottom: 0px;", name="isAdmin", disabled, title="プリセット管理者は再設定できません。")
-                    option(value="true", selected) True
+                  label.checkbox(title="プリセット管理者は操作できません。") 管理者権限を付加する。
+                    input(type="checkbox", name="isAdmin", value="true", checked, disabled, title="プリセット管理者は操作できません。")
                   input(type="hidden", name="isAdmin", placeholder="true", style="margin-bottom: 0px;", value="true")
                 else
                   if session.isAdmin
-                    select(style="margin-bottom: 0px;", name="isAdmin")
+                    label.checkbox 管理者権限を付加する。
                       if users.isAdmin
-                        option(value="true", selected) True
-                        option(value="false") False
+                        input(type="checkbox", name="isAdmin", value="true", checked)
                       else
-                        option(value="true") True
-                        option(value="false", selected) False
+                        input(type="checkbox", name="isAdmin", value="true")
                   else
-                    select(style="margin-bottom: 0px;", name="isAdmin", disabled, title="一般権限では操作できません。")
-                      option(value="false", selected) False
-                    input(type="hidden", name="isAdmin", placeholder="false", style="margin-bottom: 0px;", value="false")
+                    label.checkbox(title="一般権限では操作できません。") 管理者権限を付加する。
+                      input(type="checkbox", name="isAdmin", value="true", disabled, title="一般権限では操作できません。")
               td 管理者に設定します。
             tr.control-group
               td 6
               td.control-label isEnable
               td.controls
-                if users.id == "sysadmin"
-                  select(style="margin-bottom: 0px;", name="isEnable", disabled, title="プリセット管理者は再設定できません。")
-                    option(value="true", selected) True
-                  input(type="hidden", name="isEnable", placeholder="true", style="margin-bottom: 0px;", value="true")
-                else
-                  select(style="margin-bottom: 0px;", name="isEnable")
-                    if users.isEnable
-                      option(value="true", selected) True
-                      option(value="false") False
-                    else
-                      option(value="true") True
-                      option(value="false", selected) False
+                  if users.id == "sysadmin"
+                    label.checkbox(title="プリセット管理者は操作できません。") アカウントを有効にします。
+                      input(type="checkbox", name="isEnable", value="true", disabled, checked, title="プリセット管理者は操作できません。")
+                  else
+                    label.checkbox  アカウントを有効にします。
+                      if users.isEnable
+                        input(type="checkbox", name="isEnable", value="true", checked)
+                      else
+                        input(type="checkbox", name="isEnable", value="true")
               td アカウントを有効にします。
             tr.control-group
               td 7

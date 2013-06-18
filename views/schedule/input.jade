@@ -18,8 +18,14 @@ block content
               td.control-label subject
               td.controls
                 input(type="hidden", name="_id", placeholder="_id", style="margin-bottom: 0px;", value="#{schedules._id}")
-                input(type="text", name="subject", placeholder="Schedule Name", style="margin-bottom: 0px;", value="#{schedules.subject}")
-              td 予定名称を記載します。（自己識別用のため、内容は送信されません。）
+                select(style="margin-bottom: 0px;", name="subject")
+                  if schedules.subject == "left"
+                    option(value="left", selected) 一時退席
+                    option(value="goout") 外出
+                  else
+                    option(value="left") 一時退席
+                    option(value="goout", selected) 外出
+              td 予定名称を記載します。
             tr.control-group
               td 2
               td.control-label Description

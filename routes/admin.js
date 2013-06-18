@@ -61,7 +61,13 @@ exports.account_conf = function(req, res){
       users.name = req.body.name;
       users.password = req.body.password;
       users.isAdmin = req.body.isAdmin;
+        if(!req.body.isAdmin){
+          users.isAdmin = false
+        };
       users.isEnable = req.body.isEnable;
+        if(!req.body.isEnable){
+          users.isEnable = false
+        };
       users.isState = req.body.isState;
       users.Description = req.body.Description;
       users.save();
@@ -104,7 +110,13 @@ exports.account_conf = function(req, res){
       users.name = req.body.name;
       users.password = req.body.password;
       users.isAdmin = req.body.isAdmin;
+        if(!req.body.isAdmin){
+          users.isAdmin = false
+        };
       users.isEnable = req.body.isEnable;
+        if(!req.body.isEnable){
+          users.isEnable = false
+        };
       users.isState = req.body.isState;
       users.Description = req.body.Description;
         //new id check
@@ -166,7 +178,13 @@ exports.server_conf = function(req, res){
     obj[0].mail_from = req.body.mail_from;
     obj[0].mail_to = req.body.mail_to;
     obj[0].mail_bcc_user = req.body.mail_bcc_user;
+      if(!req.body.mail_bcc_user){
+        obj[0].mail_bcc_user = false
+      };
     obj[0].mail_reply_to_user = req.body.mail_reply_to_user;
+      if(!req.body.mail_reply_to_user){
+        obj[0].mail_reply_to_user = false
+      };
     obj[0].send_to_min_before = req.body.send_to_min_before;
     obj[0].archive_of_day = req.body.archive_of_day;
     obj[0].mesage_template = req.body.mesage_template;

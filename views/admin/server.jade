@@ -59,25 +59,21 @@ block content
               td 8
               td.control-label mail_bcc_user
               td.controls
-                select(style="margin-bottom: 0px;", name="mail_bcc_user")
+                label.checkbox BCCにユーザのアドレスを含める。
                   if servers[0].mail_bcc_user
-                    option(value="true", selected) True
-                    option(value="false") False
+                    input(type="checkbox", name="mail_bcc_user", value="true", checked)
                   else
-                    option(value="true") True
-                    option(value="false", selected) False
+                    input(type="checkbox", name="mail_bcc_user", value="true")
               td ユーザ自身をBCCに含めるかを選択します。
             tr.control-group
               td 9
               td.control-label mail_reply_to_user
               td.controls
-                select(style="margin-bottom: 0px;", name="mail_reply_to_user")
+                label.checkbox 返信先をユーザのアドレスにする。
                   if servers[0].mail_reply_to_user
-                    option(value="true", selected) True
-                    option(value="false") False
+                    input(type="checkbox", name="mail_reply_to_user", value="true", checked)
                   else
-                    option(value="true") True
-                    option(value="false", selected) False
+                    input(type="checkbox", name="mail_reply_to_user", value="true")
               td 返信先をユーザのアドレスにするか選択します。
             tr.control-group
               td 10

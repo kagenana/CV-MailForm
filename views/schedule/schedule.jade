@@ -14,18 +14,26 @@ block content
             tr.table-bordered
               td(style="text-align: center;")
                 if session.isState == "exist"
-                  button.btn.btn-success
-                    i.icon-pause.icon-white
-                    |   Left
+                  form.form.horisontal(method="post", action="/schedule/chg_status", style="margin-bottom: 0px;")
+                    .control-group(style="margin-bottom: 0px;")
+                      .control
+                        input(type="hidden", name="status", placeholder="status", style="margin-bottom: 0px;", value="left")
+                        button.btn.btn-success
+                          i.icon-pause.icon-white
+                          |   Left
                 else
                   button.btn.btn-success(disabled)
                     i.icon-pause
                     |   Left
               td(style="text-align: center;")
                 if session.isState == "exist"
-                  button.btn.btn-warning
-                    i.icon-stop.icon-white
-                    |   Go Out
+                  form.form.horisontal(method="post", action="/schedule/chg_status", style="margin-bottom: 0px;")
+                    .control-group(style="margin-bottom: 0px;")
+                      .control
+                        input(type="hidden", name="status", placeholder="status", style="margin-bottom: 0px;", value="goout")
+                        button.btn.btn-warning
+                          i.icon-stop.icon-white
+                          |   Go Out
                 else
                   button.btn.btn-warning(disabled)
                     i.icon-stop
@@ -43,9 +51,13 @@ block content
                     i.icon-play
                     |   Exist
                 else
-                  button.btn.btn-primary
-                    i.icon-play.icon-white
-                    |   Exist
+                  form.form.horisontal(method="post", action="/schedule/chg_status", style="margin-bottom: 0px;")
+                    .control-group(style="margin-bottom: 0px;")
+                      .control
+                        input(type="hidden", name="status", placeholder="status", style="margin-bottom: 0px;", value="exist")
+                        button.btn.btn-primary
+                          i.icon-play.icon-white
+                          |   Exist
       form.form.horisontal(method="post", action="/schedule/input")
         table.table.table-bordered.table-striped.table-hover
           caption CV-MailForm Active Schedule List

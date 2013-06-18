@@ -11,11 +11,11 @@ block content
               tr.table-bordered
                 th #
                 th.span1 id
-                th.span2 mail
+                th.span4 mail
                 th.span3 name
                 th.span1 isAdmin
                 th.span1 isEnable
-                th.span5 Description
+                th.span4 Description
                 th(style="text-align: right")
                   i.icon-plus-sign
                 th
@@ -44,6 +44,8 @@ block content
                     .control
                       button.btn.btn-success.btn-mini(type="submit", name="_id", value="#{users[i]._id}") Edit
                   td
+                    if i == 0
+                      button.btn.btn-danger.btn-mini(title="プリセット管理者は削除出来ません。", disabled) Delete
                     if i>0
                       form.form.horisontal(method="post", action="/admin/account_delete", style="margin: 0px; padding-top: 2px;")
                         .control-group(style=style="margin: 0px;")
