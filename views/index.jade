@@ -17,4 +17,17 @@ block content
         p isEnable :#{session.isEnable}
         p isState :#{session.isState}
         p messages :#{session.messages}
+        hr
+        script
+          var dates = new Date();
+          var year = dates.getFullYear();
+          var month = dates.getMonth()+1;
+          var week = dates.getDay();
+          var day = dates.getDate();
+          
+          var yobi= new Array("日","月","火","水","木","金","土");
+          
+          document.write("西暦"+year+"年"+month+"月"+day+"日 "+yobi[week]+"曜日");
+        p date: #{date}
+
   #container

@@ -36,13 +36,23 @@ block content
               td 3
               td.control-label timeRequest
               td.controls
-                input(type="text", name="timeRequest", placeholder="Date.now", style="margin-bottom: 0px;", value="#{schedules.timeRequest}")
+                .input-append.date.form_datetime(title="カレンダーをクリックして編集します。")
+                  input(type="text", name="timeRequest", placeholder="Click to Calender", style="margin-bottom: 0px;", value="#{timeRequestStr}", readonly)
+                  span.add-on
+                    i.icon-remove
+                  span.add-on
+                    i.icon-th
               td 外出予定時間を記載します。（30分前に送信されます。）
             tr.control-group
               td 4
               td.control-label timeReturn
               td.controls
-                input(type="text", name="timeReturn", placeholder="Date.now", style="margin-bottom: 0px;", value="#{schedules.timeReturn}")
+                .input-append.date.form_datetime(title="カレンダーをクリックして編集します。")
+                  input(type="text", name="timeReturn", placeholder="Click to Calender", style="margin-bottom: 0px;", value="#{timeReturnStr}", readonly)
+                  span.add-on
+                    i.icon-remove
+                  span.add-on
+                    i.icon-th
               td 帰社予定時間を記載します。
         .control-group
           .controls
@@ -57,4 +67,15 @@ block content
             errorClass: "alert alert-error"
           });
         });
+        $(function() {
+          $(".form_datetime").datetimepicker({
+            format: 'yyyy/mm/dd hh:ii',
+            autoclose: true,
+            todayBtn: true,
+            pickerPosition: "bottom-left",
+            minuteStep: 5,
+            language: 'ja'
+          });
+        });
+
   #container

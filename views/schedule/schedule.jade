@@ -79,8 +79,35 @@ block content
                   td= index
                   td= schedules[i].subject
                   td= schedules[i].Description
-                  td= schedules[i].timeRequest
-                  td= schedules[i].timeReturn
+                  td
+                    if(schedules[i].timeRequest)
+                      - var time = schedules[i].timeRequest;
+                      - var y = time.getFullYear();
+                      - var m = time.getMonth()+1;
+                      - var d = time.getDate();
+                      - m = ('0' + m).slice(-2);
+                      - d = ('0' + d).slice(-2);
+                      - var hh = time.getHours()
+                      - var mm = time.getMinutes();
+                      - hh = ('0' + hh).slice(-2);
+                      - mm = ('0' + mm).slice(-2);
+                      - date = y + "/" + m + "/" + d + " " + hh + ":" + mm
+                      p #{date}
+                  td
+                    if(schedules[i].timeReturn)
+                      - var time = schedules[i].timeReturn;
+                      - var y = time.getFullYear();
+                      - var m = time.getMonth()+1;
+                      - var d = time.getDate();
+                      - m = ('0' + m).slice(-2);
+                      - d = ('0' + d).slice(-2);
+                      - var hh = time.getHours()
+                      - var mm = time.getMinutes();
+                      - hh = ('0' + hh).slice(-2);
+                      - mm = ('0' + mm).slice(-2);
+                      - date = y + "/" + m + "/" + d + " " + hh + ":" + mm
+                      p #{date}
+
                   td
                     if schedules[i].isState == "que"
                       span.label.label-warning Que
@@ -95,6 +122,7 @@ block content
                       form.form.horisontal(method="post", action="/schedule/input", style="margin-bottom: 0px;")
                         .control-group(style="margin-bottom: 0px;")
                           .control
+                            input(type="hidden", name="_id", placeholder="_id", style="margin-bottom: 0px;", value="#{schedules[i]._id}")
                             button.btn.btn-success.btn-mini Edit
                     else
                       button.btn.btn-success.btn-mini(disabled) Edit
@@ -103,6 +131,7 @@ block content
                       form.form.horisontal(method="post", action="/schedule/input", style="margin-bottom: 0px;")
                         .control-group(style="margin-bottom: 0px;")
                           .control
+                            input(type="hidden", name="_id", placeholder="_id", style="margin-bottom: 0px;", value="#{schedules[i]._id}")
                             button.btn.btn-danger.btn-mini Cancel
                     else
                       button.btn.btn-danger.btn-mini(disabled) Cancel

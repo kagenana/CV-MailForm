@@ -6,8 +6,10 @@ var model = require('../models/db.js');
 var TITLE = 'CV-MailForm';
 
 exports.index = function(req, res){
+  var date1 = new Date();
+  var date = encodeDate(date1);
   var session = req.session;
-  res.render('index', { title: TITLE, session: session });
+  res.render('index', { title: TITLE, session: session, date: date });
 };
 
 exports.login = function(req, res){
@@ -55,5 +57,10 @@ exports.account = function(req, res){
     var session = req.session;
     res.render('account', { title: TITLE, session: session, users: users, mode: mode, duplicate: duplicate});
   });
+};
+
+function encodeDate(date1) {
+  var date = date1.getFullYear()+"/"+date1.getMonth()+"/"+date1.getDate()+" "+date1.getHours()+":"+date1.getMinutes();
+  return date;
 };
 

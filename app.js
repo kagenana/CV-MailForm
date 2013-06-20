@@ -56,7 +56,7 @@ app.configure('development', function(){
 });
 
 var loginCheck = function(req, res, next) {
-  if(req.session.name) {
+  if(req.session._id) {
     req.session.touch();
     if(!req.session.isEnable) {
       req.session.messages = ["Account is disabled."];
