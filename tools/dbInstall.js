@@ -4,12 +4,12 @@ var db = mongo.db('localhost:27017/CvMailForm');
 var users = [
   {
     id: 'sysadmin',
-    mail: 'mailmaster@localhost',
+    mail: 'mailmaster@localhost.local',
     name: 'System Admin',
     password: 'sysadmin',
     isAdmin: true,
     isEnable: true,
-    isState: true,
+    isState: 'exist',
     Description: 'Preset Admin User'
     }
 ];

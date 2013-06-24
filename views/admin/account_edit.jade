@@ -65,6 +65,7 @@ block content
                   else
                     label.checkbox(title="一般権限では操作できません。") 管理者権限を付加する。
                       input(type="checkbox", name="isAdmin", value="true", disabled, title="一般権限では操作できません。")
+                    input(type="hidden", name="isAdmin", placeholder="true", style="margin-bottom: 0px;", value="#{users.isAdmin}")
               td 管理者に設定します。
             tr.control-group
               td 6
@@ -73,6 +74,7 @@ block content
                   if users.id == "sysadmin"
                     label.checkbox(title="プリセット管理者は操作できません。") アカウントを有効にします。
                       input(type="checkbox", name="isEnable", value="true", disabled, checked, title="プリセット管理者は操作できません。")
+                    input(type="hidden", name="isEnable", placeholder="true", style="margin-bottom: 0px;", value="true")
                   else
                     label.checkbox  アカウントを有効にします。
                       if users.isEnable

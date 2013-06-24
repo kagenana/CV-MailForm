@@ -36,8 +36,9 @@ block content
               td 3
               td.control-label timeRequest
               td.controls
+                - var date = encodeDate(schedules.timeRequest);
                 .input-append.date.form_datetime(title="カレンダーをクリックして編集します。")
-                  input(type="text", name="timeRequest", placeholder="Click to Calender", style="margin-bottom: 0px;", value="#{timeRequestStr}", readonly)
+                  input(type="text", name="timeRequest", placeholder="Click to Calender", style="margin-bottom: 0px;", value="#{date}", readonly)
                   span.add-on
                     i.icon-remove
                   span.add-on
@@ -47,8 +48,9 @@ block content
               td 4
               td.control-label timeReturn
               td.controls
+                - var date = encodeDate(schedules.timeReturn);
                 .input-append.date.form_datetime(title="カレンダーをクリックして編集します。")
-                  input(type="text", name="timeReturn", placeholder="Click to Calender", style="margin-bottom: 0px;", value="#{timeReturnStr}", readonly)
+                  input(type="text", name="timeReturn", placeholder="Click to Calender", style="margin-bottom: 0px;", value="#{date}", readonly)
                   span.add-on
                     i.icon-remove
                   span.add-on
@@ -77,5 +79,17 @@ block content
             language: 'ja'
           });
         });
+      - function encodeDate(date) {
+        - var y = date.getFullYear();
+        - var m = date.getMonth()+1;
+        - var d = date.getDate();
+        - m = ('0' + m).slice(-2);
+        - d = ('0' + d).slice(-2);
+        - var hh = date.getHours()
+        - var mm = date.getMinutes();
+        - hh = ('0' + hh).slice(-2);
+        - mm = ('0' + mm).slice(-2);
+        - return y + "/" + m + "/" + d + " " + hh + ":" + mm
+      - }
 
   #container

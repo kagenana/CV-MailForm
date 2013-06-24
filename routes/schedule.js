@@ -31,9 +31,7 @@ exports.input = function(req, res){
     if (schedules) {
         //edit
       var session = req.session;
-      var timeRequestStr = encodeDate(schedules.timeRequest);
-      var timeReturnStr = encodeDate(schedules.timeReturn);
-      res.render('schedule/input', { title: TITLE, session: session ,schedules: schedules, timeRequestStr: timeRequestStr, timeReturnStr: timeReturnStr });
+      res.render('schedule/input', { title: TITLE, session: session ,schedules: schedules });
     }
     else {
         //new
@@ -41,7 +39,7 @@ exports.input = function(req, res){
       var session = req.session;
       var timeRequestStr = encodeDate(schedules.timeRequest);
       var timeReturnStr = encodeDate(schedules.timeReturn);
-      res.render('schedule/input', { title: TITLE, session: session ,schedules: schedules, timeRequestStr: timeRequestStr, timeReturnStr: timeReturnStr });
+      res.render('schedule/input', { title: TITLE, session: session ,schedules: schedules });
     };
   });
 };
@@ -68,8 +66,6 @@ exports.input_post = function(req, res){
       schedules.save();
     }
     else {
-      console.log(req.body.timeRequest);
-      console.log(req.body.timeReturn);
         //new
       var schedules = new Schedule();
       schedules.author_id = req.session._id;
@@ -116,6 +112,19 @@ exports.chg_status = function(req, res){
         //schedules.mailBody = "";
       schedules.save();
     };
+    
+    Server.find({}, function(err, obj){
+      if(err){
+        console.log(err);
+      };
+      var msg = {
+        from: obj[0].mail_from,
+        to: obj[0].mail_to,
+        subject: 'CV-MailFrom TEST Mail',
+        text: obj[0].mesage_template
+      };
+      sendMail(msg);
+    });
   });
 }
 
@@ -129,6 +138,39 @@ exports.archives = function(req, res){
     };
     var session = req.session;
     res.render('schedule/archives', { title: TITLE, session: session, schedules: schedules });
+  });
+};
+
+function sendMail(msg) {
+  Server.find({}, function(err, obj){
+    if(err){
+      console.log(err);
+    };
+    
+    if (obj[0].smtp_port == "465") {
+      var ssl = true;
+    }
+    else {
+      var ssl = false;
+    };
+    
+    var nodemailer = require('nodemailer');
+    var transport = nodemailer.createTransport('SMTP', {
+      host: obj[0].smtp_server,
+      secureConnection: ssl,
+      port: obj[0].smtp_port,
+      auth: {
+        user: obj[0].smtp_user,
+        pass: obj[0].smtp_pass
+      }
+    });
+    
+    transport.sendMail(msg, function(err) {
+      if(err) {
+        console.log(err);
+      };
+      msg.transport.close();
+    });
   });
 };
 

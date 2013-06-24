@@ -56,7 +56,8 @@ app.configure('development', function(){
 });
 
 var loginCheck = function(req, res, next) {
-  if(req.session._id) {
+  console.log(req.session._id);
+  if(req.session._id != null) {
     req.session.touch();
     if(!req.session.isEnable) {
       req.session.messages = ["Account is disabled."];
@@ -66,6 +67,7 @@ var loginCheck = function(req, res, next) {
   }
   else {
     req.session.destroy();
+      //req.session.messages = ["Session Time Out."];
     res.redirect('/login');
   };
 };

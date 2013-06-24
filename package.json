@@ -11,6 +11,7 @@
     "connect-flash": "*",
     "connect-mongo": "*",
     "mongoose": "*",
-    "stylus": "*"
+    "stylus": "*",
+    "nodemailer": "*"
   }
 }
