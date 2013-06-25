@@ -95,11 +95,51 @@ exports.chg_status = function(req, res){
     users.isStatus = req.body.status;
     req.session.isState = req.body.status;
     users.save();
-    res.redirect('schedule/');
-    
-    if (req.body.status == "exist") {
-    }
-    else {
+
+    Server.find({}, function(err, obj){
+      if(err){
+        console.log(err);
+      };
+      var msg = {
+        to: obj[0].mail_to
+      };
+      if (obj[0].mail_from) {
+        msg.from = obj[0].mail_from;
+      }
+      else {
+        msg.from = req.session.mail;
+      };
+      
+      if (obj[0].mail_bcc_user) {
+        msg.bcc = req.session.mail;
+      };
+      
+      if (obj[0].mail_reply_to_user) {
+        msg.replyTo = req.session.mail;
+      };
+
+      var text="";
+      if (req.body.status == "left") {
+        msg.subject = obj[0].left_subject;
+        text = obj[0].left_template;
+      };
+      if (req.body.status == "goout") {
+        msg.subject = obj[0].goout_subject;
+        text = obj[0].goout_template;
+      };
+      if (req.body.status == "exist") {
+        msg.subject = obj[0].exist_subject;
+        text = obj[0].exist_template;
+      };
+      
+      text = text.replace(/%user%/g, req.session.name);
+      text = text.replace(/%user_mail%/g, req.session.mail);
+      text = text.replace(/%domain%/g, obj[0].domain);
+      
+      msg.text = text;
+      
+      sendMail(msg);
+      
       var schedules = new Schedule();
       schedules.author_id = req.session._id;
       schedules.subject = req.body.status;
@@ -109,21 +149,10 @@ exports.chg_status = function(req, res){
       schedules.timeReturn = null;
       schedules.isState = "sent";
       schedules.Description = "簡易入力";
-        //schedules.mailBody = "";
+      schedules.mailBody = msg;
       schedules.save();
-    };
-    
-    Server.find({}, function(err, obj){
-      if(err){
-        console.log(err);
-      };
-      var msg = {
-        from: obj[0].mail_from,
-        to: obj[0].mail_to,
-        subject: 'CV-MailFrom TEST Mail',
-        text: obj[0].mesage_template
-      };
-      sendMail(msg);
+
+      res.redirect('schedule/');
     });
   });
 }

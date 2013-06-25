@@ -56,18 +56,21 @@ app.configure('development', function(){
 });
 
 var loginCheck = function(req, res, next) {
-  console.log(req.session._id);
-  if(req.session._id != null) {
-    req.session.touch();
+  console.log(req.session);
+  if(req.session.name != null) {
+    console.log('stage1');
     if(!req.session.isEnable) {
+      console.log('stage2');
       req.session.messages = ["Account is disabled."];
       res.redirect('/login');
     };
+    console.log('stage3');
     next();
   }
   else {
-    req.session.destroy();
-      //req.session.messages = ["Session Time Out."];
+    console.log('stage4');
+      //req.session.destroy();
+    req.session.messages = ["Session Time Out."];
     res.redirect('/login');
   };
 };

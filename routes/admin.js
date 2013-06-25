@@ -187,9 +187,17 @@ exports.server_conf = function(req, res){
       };
     obj[0].send_to_min_before = req.body.send_to_min_before;
     obj[0].archive_of_day = req.body.archive_of_day;
-    obj[0].mesage_template = req.body.mesage_template;
+    obj[0].left_subject = req.body.left_subject;
+    obj[0].left_template = req.body.left_template;
+    obj[0].goout_subject = req.body.goout_subject;
+    obj[0].goout_template = req.body.goout_template;
+    obj[0].custom_subject = req.body.custom_subject;
+    obj[0].custom_template = req.body.custom_template;
+    obj[0].exist_subject = req.body.exist_subject;
+    obj[0].exist_template = req.body.exist_template;
+
     obj[0].save();
-    
+    req.session.messages = ["Configuration Updated."];
     res.redirect('admin/server');
     
   });

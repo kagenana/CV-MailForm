@@ -27,7 +27,14 @@ var server = [
     mail_reply_to_user: true,
     send_to_min_before: '30',
     archive_of_day: '365',
-    mesage_template: 'メール通知内容の本文を記載して下さい。'
+    left_subject: '退席連絡',
+    left_template: '会議などで一時退席している旨を連絡します。',
+    goout_subject: '外出連絡',
+    goout_template: '外出のため社内にいない旨を連絡します。',
+    custom_subject: '予定連絡',
+    custom_template: '開始時間〜終了時間を詳細に伝える場合に使用します。',
+    exist_subject: '帰社連絡',
+    exist_template: 'デスクに戻り、電話転送可能な旨を連絡します。'
     }
 ];
 

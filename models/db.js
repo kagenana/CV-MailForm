@@ -22,7 +22,15 @@ var ServerSchema = new mongoose.Schema({
     mail_reply_to_user: Boolean,
     send_to_min_before: Number,
     archive_of_day: Number,
-    mesage_template: String
+    left_subject: String,
+    left_template: String,
+    goout_subject: String,
+    goout_template: String,
+    custom_subject: String,
+    custom_template: String,
+    exist_subject: String,
+    exist_template: String
+    
 },{collection: 'server'});
 exports.Server = db.model('Server', ServerSchema);
 

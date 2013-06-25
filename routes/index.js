@@ -23,15 +23,19 @@ exports.signup = function(req, res){
   },
   function(err,obj){
     if(obj){
+      console.log('stage5');
       req.session._id = obj._id;
       req.session.userid = obj.id;
       req.session.name = obj.name;
+      req.session.mail = obj.mail;
       req.session.isAdmin = obj.isAdmin;
       req.session.isEnable = obj.isEnable;
       req.session.isState = obj.isState;
       res.redirect('/');
+      console.log(req.session);
     }
     else {
+      console.log('stage6');
       console.log(err);
       req.session.messages = ["Cannot Login."];
       res.redirect('/login');

@@ -3,6 +3,11 @@ extends ../layout
 block content
   .container
       h2 Sever Configuration
+      - if(messages)
+          each message in messages
+            .alert.alert-success
+              button.close(data-dismiss="alert")&times;
+              | #{messages}
       form.form.horisontal#serverConf(method="post", action="/admin/server_conf")
         table.table.table-bordered.table-striped.table-hover
           caption CV-MailForm Configuration in Databases
@@ -41,14 +46,14 @@ block content
               td 5
               td.control-label smtp_pass
               td.controls
-                input(type="text", name="smtp_pass", placeholder="password", style="margin-bottom: 0px;", value="#{servers[0].smtp_pass}")
+                input(type="password", name="smtp_pass", placeholder="password", style="margin-bottom: 0px;", value="#{servers[0].smtp_pass}")
               td SMTP接続パスワードを設定します。（必要な場合）
             tr.control-group
               td 6
               td.control-label mail_from
               td.controls
                 input(type="text", name="mail_from", placeholder="noreply@example.co.jp", style="margin-bottom: 0px;", value="#{servers[0].mail_from}")
-              td メール通知の送信元を設定します。
+              td メール通知の送信元を設定します。空欄の場合、ログインユーザのアドレスをfromに使用します。
             tr.control-group
               td 7
               td.control-label mail_to
@@ -89,9 +94,15 @@ block content
               td ログを何日間保存するかを指定します。（指定単位：日）
             tr.control-group
               td 12
-              td.control-label mesage_template 
+              td.control-label left_subject
+              td.controls
+                input(type="text", name="left_subject", placeholder="退席連絡", style="margin-bottom: 0px;", value="#{servers[0].left_subject}")
+              td 一時退席連絡の件名を指定します。
+            tr.control-group
+              td 13
+              td.control-label left_template 
               td.controls.controls-row
-                textarea.span5(rows="11", name="mesage_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].mesage_template}
+                textarea.span5(rows="11", name="left_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].left_template}
               td メッセージテンプレートを指定します。
                  p 以下の代入値を利用することが出来ます。
                  table.table.table-bordered.table-striped
@@ -109,6 +120,92 @@ block content
                      tr
                        td %p1%～%pn%
                        td フォーム項番の入力内容
+            tr.control-group
+              td 14
+              td.control-label goout_subject
+              td.controls
+                input(type="text", name="goout_subject", placeholder="外出連絡", style="margin-bottom: 0px;", value="#{servers[0].goout_subject}")
+              td 外出連絡の件名を指定します。
+            tr.control-group
+              td 15
+              td.control-label goout_template 
+              td.controls.controls-row
+                textarea.span5(rows="11", name="goout_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].goout_template}
+              td メッセージテンプレートを指定します。
+                 p 以下の代入値を利用することが出来ます。
+                 table.table.table-bordered.table-striped
+                   caption 代入値一覧
+                   tbody
+                     tr
+                       td %user%
+                       td ユーザ名（フルネーム）
+                     tr
+                       td %user_mail%
+                       td ユーザのメールアドレス
+                     tr
+                       td %domain%
+                       td システムのドメイン名
+                     tr
+                       td %p1%～%pn%
+                       td フォーム項番の入力内容
+            tr.control-group
+              td 16
+              td.control-label custom_subject
+              td.controls
+                input(type="text", name="custom_subject", placeholder="スケジュール連絡", style="margin-bottom: 0px;", value="#{servers[0].custom_subject}")
+              td 詳細スケジュール入力時の件名を指定します。
+            tr.control-group
+              td 17
+              td.control-label custom_template 
+              td.controls.controls-row
+                textarea.span5(rows="11", name="custom_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].custom_template}
+              td メッセージテンプレートを指定します。
+                 p 以下の代入値を利用することが出来ます。
+                 table.table.table-bordered.table-striped
+                   caption 代入値一覧
+                   tbody
+                     tr
+                       td %user%
+                       td ユーザ名（フルネーム）
+                     tr
+                       td %user_mail%
+                       td ユーザのメールアドレス
+                     tr
+                       td %domain%
+                       td システムのドメイン名
+                     tr
+                       td %p1%～%pn%
+                       td フォーム項番の入力内容
+            tr.control-group
+              td 18
+              td.control-label exist_subject
+              td.controls
+                input(type="text", name="exist_subject", placeholder="帰社連絡", style="margin-bottom: 0px;", value="#{servers[0].exist_subject}")
+              td 帰社連絡の件名を指定します。
+            tr.control-group
+              td 19
+              td.control-label exist_template 
+              td.controls.controls-row
+                textarea.span5(rows="11", name="exist_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].exist_template}
+              td メッセージテンプレートを指定します。
+                 p 以下の代入値を利用することが出来ます。
+                 table.table.table-bordered.table-striped
+                   caption 代入値一覧
+                   tbody
+                     tr
+                       td %user%
+                       td ユーザ名（フルネーム）
+                     tr
+                       td %user_mail%
+                       td ユーザのメールアドレス
+                     tr
+                       td %domain%
+                       td システムのドメイン名
+                     tr
+                       td %p1%～%pn%
+                       td フォーム項番の入力内容
+
+
         .control-group
           .controls
             button.btn.btn-primary(type="submit") Configure
@@ -121,11 +218,18 @@ block content
               'smtp_port' : { required: true, number: true },
               'smtp_user' : { minlength: 2 },
               'smtp_pass' : { minlength: 6 },
-              'mail_from' : { required: true, email: true },
+              'mail_from' : { email: true },
               'mail_to' : { required: true, email: true },
               'send_to_min_before' : { required: true, number: true },
               'archive_of_day' : { required: true, number: true },
-              'mesage_template' : { required: true }
+              'left_subject' : { required: true },
+              'left_template' : { required: true },
+              'goout_subject' : { required: true },
+              'goout_template' : { required: true },
+              'custom_subject' : { required: true },
+              'custom_template' : { required: true },
+              'exist_subject' : { required: true },
+              'exist_template' : { required: true }
             },
             errorElement: "label",
             errorClass: "alert alert-error"
