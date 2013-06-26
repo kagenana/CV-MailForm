@@ -27,6 +27,7 @@ exports.signup = function(req, res){
       req.session._id = obj._id;
       req.session.userid = obj.id;
       req.session.name = obj.name;
+      req.session.name_short = obj.name_short;
       req.session.mail = obj.mail;
       req.session.isAdmin = obj.isAdmin;
       req.session.isEnable = obj.isEnable;

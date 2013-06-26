@@ -59,6 +59,7 @@ exports.account_conf = function(req, res){
       users.id = users.id;
       users.mail = req.body.mail;
       users.name = req.body.name;
+      users.name_short = req.body.name_short;
       users.password = req.body.password;
       users.isAdmin = req.body.isAdmin;
         if(!req.body.isAdmin){
@@ -108,6 +109,7 @@ exports.account_conf = function(req, res){
       users.id = req.body.id;
       users.mail = req.body.mail;
       users.name = req.body.name;
+      users.name_short = req.body.name_short;
       users.password = req.body.password;
       users.isAdmin = req.body.isAdmin;
         if(!req.body.isAdmin){

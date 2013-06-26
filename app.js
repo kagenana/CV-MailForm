@@ -69,8 +69,8 @@ var loginCheck = function(req, res, next) {
   }
   else {
     console.log('stage4');
-      //req.session.destroy();
-    req.session.messages = ["Session Time Out."];
+    req.session.destroy();
+      //req.session.messages = ["Session Time Out."];
     res.redirect('/login');
   };
 };

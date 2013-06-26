@@ -80,6 +80,7 @@ exports.input_post = function(req, res){
       schedules.save();
     };
     
+    req.session.messages = ["Add or Edit Schedule."];
     res.redirect('schedule/');
   });
 };
@@ -133,8 +134,38 @@ exports.chg_status = function(req, res){
       };
       
       text = text.replace(/%user%/g, req.session.name);
+      text = text.replace(/%user_short%/g, req.session.name_short);
       text = text.replace(/%user_mail%/g, req.session.mail);
-      text = text.replace(/%domain%/g, obj[0].domain);
+
+      var date = new Date();
+      var hh = date.getHours()
+      var mm = date.getMinutes();
+      var time = hh + "時" + mm +"分"
+      text = text.replace(/%left%/g, time);
+
+      if (req.body.fulltime){
+        var time = "終日戻らない予定です。"
+        req.body.timeReturn = null;
+        text = text.replace(/%return%/g, time);
+      }
+      else{
+        var date = new Date(req.body.timeReturn);
+        var hh = date.getHours()
+        var mm = date.getMinutes();
+        var time = hh + "時" + mm +"分頃に戻る予定です。"
+        text = text.replace(/%return%/g, time);
+      }
+      text = text.replace(/%state%/g, req.body.status);
+      
+      var str = req.body.description;
+      if (str == "指定なし"){
+        str = ""
+      }
+      else {
+        str = str + "のため";
+      };
+      text = text.replace(/%description%/g, str);
+      
       
       msg.text = text;
       
@@ -146,12 +177,18 @@ exports.chg_status = function(req, res){
       schedules.author = req.session.id;
       schedules.timeSubmit = Date.now();
       schedules.timeRequest = Date.now();
-      schedules.timeReturn = null;
+      if (req.body.timeReturn) {
+        schedules.timeReturn = new Date(req.body.timeReturn);
+      }
+      else {
+        schedules.timeReturn = null;
+      };
       schedules.isState = "sent";
-      schedules.Description = "簡易入力";
+      schedules.Description = req.body.description;
       schedules.mailBody = msg;
       schedules.save();
-
+      
+      req.session.messages = ["Add New Schedule and Sent Message."];
       res.redirect('schedule/');
     });
   });

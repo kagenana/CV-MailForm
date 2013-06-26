@@ -38,6 +38,7 @@ var UserSchema = new mongoose.Schema({
   id: { type: String, default: '', index: true},
   mail: { type: String, default: '' },
   name: { type: String, default: '' },
+  name_short: { type: String, default: '' },
   password: { type: String, default: '', index: true },
   isAdmin: { type: Boolean, default: false },
   isEnable: { type: Boolean, default: true },

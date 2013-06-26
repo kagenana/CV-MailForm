@@ -53,7 +53,9 @@ block content
               td.control-label mail_from
               td.controls
                 input(type="text", name="mail_from", placeholder="noreply@example.co.jp", style="margin-bottom: 0px;", value="#{servers[0].mail_from}")
-              td メール通知の送信元を設定します。空欄の場合、ログインユーザのアドレスをfromに使用します。
+              td
+                p メール通知の送信元を設定します。
+                p (空欄の場合、ユーザのアドレスを使用します。)
             tr.control-group
               td 7
               td.control-label mail_to
@@ -112,14 +114,29 @@ block content
                        td %user%
                        td ユーザ名（フルネーム）
                      tr
+                       td %user_short%
+                       td ユーザ名（短縮）
+                     tr
                        td %user_mail%
                        td ユーザのメールアドレス
                      tr
-                       td %domain%
-                       td システムのドメイン名
+                       td %left%
+                       td
+                         p 退席開始時間
+                         p (現時点では入力時の時間を設定します。)
                      tr
-                       td %p1%～%pn%
-                       td フォーム項番の入力内容
+                       td %return%
+                       td
+                         p 帰社予定時間
+                         p (未入力時は「未定」と設定されます。)
+                     tr
+                       td %state%
+                       td 状態（離席・外出・帰社）
+                     tr
+                       td %description%
+                       td
+                         p 状態の詳細（会議など）
+                         p (「設定しない」を選択時は記載されません。)
             tr.control-group
               td 14
               td.control-label goout_subject
@@ -140,21 +157,36 @@ block content
                        td %user%
                        td ユーザ名（フルネーム）
                      tr
+                       td %user_short%
+                       td ユーザ名（短縮）
+                     tr
                        td %user_mail%
                        td ユーザのメールアドレス
                      tr
-                       td %domain%
-                       td システムのドメイン名
+                       td %left%
+                       td
+                         p 退席開始時間
+                         p (現時点では入力時の時間を設定します。)
                      tr
-                       td %p1%～%pn%
-                       td フォーム項番の入力内容
-            tr.control-group
+                       td %return%
+                       td
+                         p 帰社予定時間
+                         p (未入力時は「未定」と設定されます。)
+                     tr
+                       td %state%
+                       td 状態（離席・外出・帰社）
+                     tr
+                       td %description%
+                       td
+                         p 状態の詳細（会議など）
+                         p (「設定しない」を選択時は記載されません。)
+            //tr.control-group
               td 16
               td.control-label custom_subject
               td.controls
                 input(type="text", name="custom_subject", placeholder="スケジュール連絡", style="margin-bottom: 0px;", value="#{servers[0].custom_subject}")
               td 詳細スケジュール入力時の件名を指定します。
-            tr.control-group
+            //tr.control-group
               td 17
               td.control-label custom_template 
               td.controls.controls-row
@@ -168,14 +200,29 @@ block content
                        td %user%
                        td ユーザ名（フルネーム）
                      tr
+                       td %user_short%
+                       td ユーザ名（短縮）
+                     tr
                        td %user_mail%
                        td ユーザのメールアドレス
                      tr
-                       td %domain%
-                       td システムのドメイン名
+                       td %left%
+                       td
+                         p 退席開始時間
+                         p (現時点では入力時の時間を設定します。)
                      tr
-                       td %p1%～%pn%
-                       td フォーム項番の入力内容
+                       td %return%
+                       td
+                         p 帰社予定時間
+                         p (未入力時は「未定」と設定されます。)
+                     tr
+                       td %state%
+                       td 状態（離席・外出・帰社）
+                     tr
+                       td %description%
+                       td
+                         p 状態の詳細（会議など）
+                         p (「設定しない」を選択時は記載されません。)
             tr.control-group
               td 18
               td.control-label exist_subject
@@ -196,16 +243,29 @@ block content
                        td %user%
                        td ユーザ名（フルネーム）
                      tr
+                       td %user_short%
+                       td ユーザ名（短縮）
+                     tr
                        td %user_mail%
                        td ユーザのメールアドレス
                      tr
-                       td %domain%
-                       td システムのドメイン名
+                       td %left%
+                       td
+                         p 退席開始時間
+                         p (現時点では入力時の時間を設定します。)
                      tr
-                       td %p1%～%pn%
-                       td フォーム項番の入力内容
-
-
+                       td %return%
+                       td
+                         p 帰社予定時間
+                         p (未入力時は「未定」と設定されます。)
+                     tr
+                       td %state%
+                       td 状態（離席・外出・帰社）
+                     tr
+                       td %description%
+                       td
+                         p 状態の詳細（会議など）
+                         p (「設定しない」を選択時は記載されません。)
         .control-group
           .controls
             button.btn.btn-primary(type="submit") Configure

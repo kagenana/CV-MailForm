@@ -6,6 +6,7 @@ var users = [
     id: 'sysadmin',
     mail: 'mailmaster@localhost.local',
     name: 'System Admin',
+    name_short: 'Admin',
     password: 'sysadmin',
     isAdmin: true,
     isEnable: true,

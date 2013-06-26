@@ -49,6 +49,12 @@ block content
               td ユーザ名（フルネーム）を設定します。
             tr.control-group
               td 5
+              td.control-label name_short
+              td.controls
+                input(type="text", name="name_short", placeholder="Nickname", style="margin-bottom: 0px;", value="#{users.name_short}")
+              td ユーザ名（省略型）を設定します。
+            tr.control-group
+              td 6
               td.control-label isAdmin
               td.controls
                 if users.id == "sysadmin"
@@ -68,7 +74,7 @@ block content
                     input(type="hidden", name="isAdmin", placeholder="true", style="margin-bottom: 0px;", value="#{users.isAdmin}")
               td 管理者に設定します。
             tr.control-group
-              td 6
+              td 7
               td.control-label isEnable
               td.controls
                   if users.id == "sysadmin"
@@ -83,7 +89,7 @@ block content
                         input(type="checkbox", name="isEnable", value="true")
               td アカウントを有効にします。
             tr.control-group
-              td 7
+              td 8
               td.control-label Description
               td.controls
                 input(type="text", name="Description", placeholder="Description", style="margin-bottom: 0px;", value="#{users.Description}")
@@ -98,6 +104,7 @@ block content
               'id' : { required: true, minlength: 2 },
               'mail' : { required: true, email: true },
               'name' : { required: true},
+              'name_short' : { required: true},
               'password' : { required: true, minlength: 6 },
               'password_valid' : { required: true, minlength: 6, equalTo: "#password" }
             },
