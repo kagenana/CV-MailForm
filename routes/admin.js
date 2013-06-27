@@ -204,3 +204,18 @@ exports.server_conf = function(req, res){
     
   });
 };
+
+exports.archives = function(req, res){
+  Schedule.find({
+  },
+  {},
+  { sort: [['timeSubmit', -1]] },
+  function(err, schedules){
+    if(err){
+      console.log(err);
+    };
+    var session = req.session;
+    res.render('admin/archives', { title: TITLE, session: session, schedules: schedules });
+  });
+};
+

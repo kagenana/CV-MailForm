@@ -34,7 +34,7 @@ block content
                 form.form.horisontal(method="post", action="/schedule/input", style="margin-bottom: 0px;")
                   .control-group(style="margin-bottom: 0px;")
                     .control
-                      button.btn.btn-info(disabled)
+                      button.btn.btn-info(disabled, title="すみません、まだ未実装です。")
                         i.icon-edit.icon-white
                         |   Custom Input
               td(style="text-align: center;")
@@ -47,7 +47,7 @@ block content
                     .control-group(style="margin-bottom: 0px;")
                       .control
                         input(type="hidden", name="status", placeholder="status", style="margin-bottom: 0px;", value="exist")
-                        input(type="hidden", name="description", placeholder="description", style="margin-bottom: 0px;", value="戻り")
+                        input(type="hidden", name="description", placeholder="description", style="margin-bottom: 0px;", value="")
                         button.btn.btn-primary
                           i.icon-play.icon-white
                           |   Exist
@@ -63,11 +63,11 @@ block content
             thead
               tr.table-bordered
                 th #
-                th.span3 Subject
+                th.span1 Status
                 th.span5 Description
                 th.span2 Leaving Time
                 th.span2 Return Time
-                th.span1 State
+                th.span1 Mail
                 th.span1 Edit
                 th.span1 Cancel
             tbody
@@ -75,7 +75,13 @@ block content
                 - var index = i +1
                 tr
                   td= index
-                  td= schedules[i].subject
+                  td
+                    if schedules[i].subject == "left"
+                      span.label.label-success 離席
+                    if schedules[i].subject == "goout"
+                      span.label.label-warning 外出
+                    if schedules[i].subject == "exist"
+                      span.label.label-info 戻り
                   td= schedules[i].Description
                   td
                     if(schedules[i].timeRequest)
@@ -146,7 +152,7 @@ block content
             tr.control-group
               td.controls
                 select(style="margin-bottom: 0px;", name="description")
-                    option(value="指定なし", selected) 指定なし
+                    option(value="", selected) 指定なし
                     option(value="社内会議") 社内会議
                     option(value="来客対応") 来客対応
                     option(value="食事") 食事
@@ -166,7 +172,7 @@ block content
                 p 帰社予定時間を記載します。
                 pre
                  | 未定:時刻をクリアしてください。
-                 | 終日:時刻の入力は不要です。
+                 | 終日:時刻は無視されます。
         .modal-footer
           .control-group(style="margin-bottom: 0px;")
             .control
@@ -186,7 +192,7 @@ block content
             tr.control-group
               td.controls
                 select(style="margin-bottom: 0px;", name="description")
-                    option(value="指定なし", selected) 指定なし
+                    option(value="", selected) 指定なし
                     option(value="客先打ち合わせ") 客先打ち合わせ
                     option(value="現場作業") 現場作業
                     option(value="出張") 出張
@@ -207,7 +213,7 @@ block content
                 p 帰社予定時間を記載します。
                 pre
                  | 未定:時刻をクリアしてください。
-                 | 終日:時刻の入力は不要です。
+                 | 終日:時刻は無視されます。
         .modal-footer
           .control-group(style="margin-bottom: 0px;")
             .control

@@ -27,11 +27,9 @@ app.configure(function(){
   app.use(express.session({
     secret: 'secret',
     store: new MongoStore({
-      path: '/',
-      domain: 'conversion.co.jp',
       db: 'session',
-      host: 'localhost',
-      clear_interval: 60 * 60
+        //host: 'localhost',
+        //clear_interval: 60 * 60
     }),
     cookie: {
       httpOnly: false,
@@ -84,7 +82,7 @@ var adminCheck = function(req, res, next) {
   }
 };
 
-app.get('/', loginCheck, routes.index);
+app.get('/', loginCheck, schedule.index);
 app.get('/login', routes.login);
 app.post('/signup', routes.signup);
 app.get('/logout', routes.logout);
@@ -104,6 +102,8 @@ app.post('/admin/account_delete', loginCheck, adminCheck, admin.account_delete);
 
 app.get('/admin/server', loginCheck, adminCheck, admin.server);
 app.post('/admin/server_conf', loginCheck, adminCheck, admin.server_conf);
+
+app.get('/admin/archives', loginCheck, adminCheck, admin.archives);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

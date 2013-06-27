@@ -12,6 +12,7 @@
     "connect-mongo": "*",
     "mongoose": "*",
     "stylus": "*",
-    "nodemailer": "*"
+    "nodemailer": "*",
+    "fibers": "1.0.1"
   }
 }

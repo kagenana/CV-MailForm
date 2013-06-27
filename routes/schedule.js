@@ -6,8 +6,12 @@ var model = require('../models/db.js');
 var TITLE = 'CV-MailForm Schedule';
 
 exports.index = function(req, res){
+  var today = new Date();
+  today.setHours(8,0,0);
+  console.log(today.toString());
   Schedule.find({
-    author_id: req.session._id
+    author_id: req.session._id,
+    $or: [{timeReturn: {$gt: today}},{timeSubmit: {$gt: today}}]
   },
   {},
   { sort: [['timeSubmit', -1]] },
@@ -93,7 +97,7 @@ exports.chg_status = function(req, res){
     if(err){
       console.log(err);
     };
-    users.isStatus = req.body.status;
+    users.isState = req.body.status;
     req.session.isState = req.body.status;
     users.save();
 
@@ -136,6 +140,16 @@ exports.chg_status = function(req, res){
       text = text.replace(/%user%/g, req.session.name);
       text = text.replace(/%user_short%/g, req.session.name_short);
       text = text.replace(/%user_mail%/g, req.session.mail);
+      text = text.replace(/%state%/g, req.body.status);
+
+      var str = req.body.description;
+      if (str == ""){
+        str = ""
+      }
+      else {
+        str = str + "のため";
+      };
+      text = text.replace(/%description%/g, str);
 
       var date = new Date();
       var hh = date.getHours()
@@ -146,27 +160,25 @@ exports.chg_status = function(req, res){
       if (req.body.fulltime){
         var time = "終日戻らない予定です。"
         req.body.timeReturn = null;
+        req.body.description = req.body.description + " (終日予定)";
         text = text.replace(/%return%/g, time);
       }
       else{
-        var date = new Date(req.body.timeReturn);
-        var hh = date.getHours()
-        var mm = date.getMinutes();
-        var time = hh + "時" + mm +"分頃に戻る予定です。"
-        text = text.replace(/%return%/g, time);
+        if(req.body.timeReturn){
+          var date = new Date(req.body.timeReturn);
+          var hh = date.getHours()
+          var mm = date.getMinutes();
+          var time = hh + "時" + mm +"分頃に戻る予定です。"
+          text = text.replace(/%return%/g, time);
+        } else {
+          if (req.body.status !="exist") {
+            req.body.description = req.body.description + " (戻り未定)";
+            var time = "戻りの時間は未定です。";
+            text = text.replace(/%return%/g, time);
+          }
+        }
       }
-      text = text.replace(/%state%/g, req.body.status);
-      
-      var str = req.body.description;
-      if (str == "指定なし"){
-        str = ""
-      }
-      else {
-        str = str + "のため";
-      };
-      text = text.replace(/%description%/g, str);
-      
-      
+
       msg.text = text;
       
       sendMail(msg);
@@ -174,7 +186,7 @@ exports.chg_status = function(req, res){
       var schedules = new Schedule();
       schedules.author_id = req.session._id;
       schedules.subject = req.body.status;
-      schedules.author = req.session.id;
+      schedules.author = req.session.name + " (" + req.session.userid + ")";
       schedules.timeSubmit = Date.now();
       schedules.timeRequest = Date.now();
       if (req.body.timeReturn) {
@@ -198,6 +210,8 @@ exports.archives = function(req, res){
   Schedule.find({
     author_id: req.session._id
   },
+  {},
+  { sort: [['timeSubmit', -1]] },
   function(err, schedules){
     if(err){
       console.log(err);
