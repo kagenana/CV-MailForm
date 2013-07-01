@@ -155,10 +155,10 @@ exports.chg_status = function(req, res){
       var hh = date.getHours();
       var mm = date.getMinutes();
       if (mm == "0") {
-        var time = hh + "時";
+        var time = hh + "時" + "頃から不在予定です。";
       }
       else {
-        var time = hh + "時" + mm +"分"
+        var time = hh + "時" + mm +"分" + "頃から不在予定です。"
       };
       
       text = text.replace(/%left%/g, time);
@@ -175,10 +175,10 @@ exports.chg_status = function(req, res){
           var hh = date.getHours()
           var mm = date.getMinutes();
           if (mm == "0") {
-            var time = hh + "時";
+            var time = hh + "時" + "頃に戻る予定です。";
           }
           else {
-            var time = hh + "時" + mm +"分"
+            var time = hh + "時" + mm +"分" + "頃に戻る予定です。"
           };
 
           text = text.replace(/%return%/g, time);
