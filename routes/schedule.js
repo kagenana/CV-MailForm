@@ -147,7 +147,7 @@ exports.chg_status = function(req, res){
         str = ""
       }
       else {
-        //str = str + "のため";
+        str = str + "のため";
       };
       text = text.replace(/%description%/g, str);
 
