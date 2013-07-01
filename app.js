@@ -25,16 +25,10 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.cookieParser());
   app.use(express.session({
-    secret: 'secret',
+    secret: "secret",
     store: new MongoStore({
-      db: 'session',
-        //host: 'localhost',
-        //clear_interval: 60 * 60
-    }),
-    cookie: {
-      httpOnly: false,
-      maxAge: new Date(Date.now() + 60 *60 * 1000)
-    }
+      db: "session"
+    })
   }));
   app.use(function(req, res, next){
     res.locals({

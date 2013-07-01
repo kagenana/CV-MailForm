@@ -147,14 +147,20 @@ exports.chg_status = function(req, res){
         str = ""
       }
       else {
-        str = str + "のため";
+        //str = str + "のため";
       };
       text = text.replace(/%description%/g, str);
 
       var date = new Date();
-      var hh = date.getHours()
+      var hh = date.getHours();
       var mm = date.getMinutes();
-      var time = hh + "時" + mm +"分"
+      if (mm == "0") {
+        var time = hh + "時";
+      }
+      else {
+        var time = hh + "時" + mm +"分"
+      };
+      
       text = text.replace(/%left%/g, time);
 
       if (req.body.fulltime){
@@ -168,7 +174,13 @@ exports.chg_status = function(req, res){
           var date = new Date(req.body.timeReturn);
           var hh = date.getHours()
           var mm = date.getMinutes();
-          var time = hh + "時" + mm +"分頃に戻る予定です。"
+          if (mm == "0") {
+            var time = hh + "時";
+          }
+          else {
+            var time = hh + "時" + mm +"分"
+          };
+
           text = text.replace(/%return%/g, time);
         } else {
           if (req.body.status !="exist") {
