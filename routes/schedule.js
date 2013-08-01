@@ -3,7 +3,7 @@ var model = require('../models/db.js');
     Server = model.Server,
     Schedule = model.Schedule;
 
-var TITLE = 'CV-MailForm Schedule';
+var TITLE = 'オンライン行動予定表（仮）　ユーザメニュー';
 
 exports.index = function(req, res){
   var today = new Date();
@@ -84,7 +84,7 @@ exports.input_post = function(req, res){
       schedules.save();
     };
     
-    req.session.messages = ["Add or Edit Schedule."];
+    req.session.messages = ["スケジュールを追加または変更しました。"];
     res.redirect('schedule/');
   });
 };
@@ -212,7 +212,7 @@ exports.chg_status = function(req, res){
       schedules.mailBody = msg;
       schedules.save();
       
-      req.session.messages = ["Add New Schedule and Sent Message."];
+      req.session.messages = ["在席状態を更新し、通知メールを送信しました。"];
       res.redirect('schedule/');
     });
   });

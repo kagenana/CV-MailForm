@@ -34,8 +34,8 @@ html
     block content
       .container.container-login
         .hero-unit.form-login
-          h2= title
-          p Please login
+          h3.text-warning= title
+          h5 ログインして下さい
           .row-fluid
             - if(messages)
                 each message in messages
@@ -45,8 +45,9 @@ html
             form#loginForm(method="post", action="/signup")
               input(type="text", name="id", placeholder="Account ID")
               input(type="password", name="password", placeholder="Password")
-              label.checkbox Keep Login
-                input(type="checkbox")
+                //label.checkbox Keep Login
+                    input(type="checkbox")
+              br
               input.btn.btn-primary(type="submit", value="Login")
             script(type="text/javascript")
               $(function() {

@@ -2,46 +2,46 @@ extends ../layout
 
 block content
   .container
-      h2 Active Schedule List
+      h2 在席状況管理
       if session.isState == "exist"
-        button.btn.btn-large.btn-primary.disabled(disabled, style="width: 500px;") Exist
+        button.btn.btn-large.btn-primary.disabled(disabled, style="width: 400px;") 現　在　「在　席　中」　で　す。
       if session.isState == "left"
-        button.btn.btn-large.btn-success.disabled(disabled, style="width: 500px;") Left
+        button.btn.btn-large.btn-success.disabled(disabled, style="width: 400px;") 現　在　「離　席　中」　で　す。
       if session.isState == "goout"
-        button.btn.btn-large.btn-warning.disabled(disabled, style="width: 500px;") Go Out
-      table.table.table-bordered.table-striped.table-hover(style="width: 500px;, margin-bottom: 0px; margin-top: 3px;")
+        button.btn.btn-large.btn-warning.disabled(disabled, style="width: 400px;") 現　在　「外　出　中」　で　す。
+      table.table.table-bordered.table-striped.table-hover(style="width: 400px;, margin-bottom: 0px; margin-top: 3px;")
           tbody
             tr.table-bordered
               td(style="text-align: center;")
                 if session.isState == "exist"
                   a.button.btn.btn-success(href="#Inputleft", data-toggle="modal")
                     i.icon-pause.icon-white
-                    |   Left
+                    |   離　席
                 else
                   button.btn.btn-success(disabled)
                     i.icon-pause
-                    |   Left
+                    |   離　席
               td(style="text-align: center;")
                 if session.isState == "exist"
                   a.button.btn.btn-warning(href="#Inputgoout", data-toggle="modal")
                     i.icon-stop.icon-white
-                    |   Go Out
+                    |   外　出
                 else
                   button.btn.btn-warning(disabled)
                     i.icon-stop
-                    |   Go Out
-              td(style="text-align: center;")
+                    |   外　出
+              //td(style="text-align: center;")
                 form.form.horisontal(method="post", action="/schedule/input", style="margin-bottom: 0px;")
-                  .control-group(style="margin-bottom: 0px;")
-                    .control
-                      button.btn.btn-info(disabled, title="すみません、まだ未実装です。")
-                        i.icon-edit.icon-white
-                        |   Custom Input
+                    .control-group(style="margin-bottom: 0px;")
+                      .control
+                        button.btn.btn-info(disabled, title="すみません、まだ未実装です。")
+                          i.icon-edit.icon-white
+                          |   Custom Input
               td(style="text-align: center;")
                 if session.isState == "exist"
                   button.btn.btn-primary(disabled)
                     i.icon-play
-                    |   Exist
+                    |   戻　り
                 else
                   form.form.horisontal(method="post", action="/schedule/chg_status", style="margin-bottom: 0px;")
                     .control-group(style="margin-bottom: 0px;")
@@ -50,7 +50,7 @@ block content
                         input(type="hidden", name="description", placeholder="description", style="margin-bottom: 0px;", value="")
                         button.btn.btn-primary
                           i.icon-play.icon-white
-                          |   Exist
+                          |   戻　り
       - if(messages)
           each message in messages
             .alert.alert-success
@@ -58,18 +58,18 @@ block content
               | #{messages}
       form.form.horisontal(method="post", action="/schedule/input")
         table.table.table-bordered.table-striped.table-hover
-          caption CV-MailForm Active Schedule List
+          caption 当日中の入力一覧
           .control-group
             thead
               tr.table-bordered
                 th #
-                th.span1 Status
-                th.span8 Description
-                th.span3 Leaving Time
-                th.span3 Return Time
-                th.span1 Mail
-                th.span1 Edit
-                th.span1 Cancel
+                th.span1 状態
+                th.span8 不在理由の詳細
+                th.span3 退席時刻
+                th.span3 戻り予定時刻
+                th.span1 通知
+                th.span1 編集
+                th.span1 取消
             tbody
               for schedule, i in schedules
                 - var index = i +1
@@ -77,11 +77,11 @@ block content
                   td= index
                   td
                     if schedules[i].subject == "left"
-                      span.label.label-success 離席
+                      span.label.label-success 離席中
                     if schedules[i].subject == "goout"
-                      span.label.label-warning 外出
+                      span.label.label-warning 外出中
                     if schedules[i].subject == "exist"
-                      span.label.label-info 戻り
+                      span.label.label-info 在席中
                   td= schedules[i].Description
                   td
                     if(schedules[i].timeRequest)
@@ -93,13 +93,13 @@ block content
                       p #{date}
                   td
                     if schedules[i].isState == "que"
-                      span.label.label-warning Que
+                      span.label.label-warning 保留
                     if schedules[i].isState == "sent"
-                      span.label.label-info Sent
+                      span.label.label-info 送信
                     if schedules[i].isState == "calcel"
-                      span.label.label-danger Cancel
+                      span.label.label-danger 取消
                     if schedules[i].isState == "archive"
-                      span.label.label-inverse archive
+                      span.label.label-inverse 未送
                   td
                     if schedules[i].isState == "que"
                       form.form.horisontal(method="post", action="/schedule/input", style="margin-bottom: 0px;")
@@ -142,7 +142,7 @@ block content
     .modal.hide.fade(id="Inputleft", tabindex="-1", role="dialog", aria-labelledby="leftInputLabel", aria-hidden="true")
       .modal-header
         button.close(type="button", data-dismiss="modal", aria-hidden="true")&times;
-        button.btn.btn-large.btn-success.disabled(id="leftInputLabel", disabled, style="width: 500px;") Left Input Detail
+        button.btn.btn-large.btn-success.disabled(id="leftInputLabel", disabled, style="width: 500px;") 「離　席」　詳　細　入　力
       form.form.horisontal(method="post", action="/schedule/chg_status", style="margin-bottom: 0px;")
         .modal-body
           .control-group(style="margin-bottom: 0px;")
@@ -182,7 +182,7 @@ block content
     .modal.hide.fade(id="Inputgoout", tabindex="-1", role="dialog", aria-labelledby="gooutInputLabel", aria-hidden="true")
       .modal-header
         button.close(type="button", data-dismiss="modal", aria-hidden="true")&times;
-        button.btn.btn-large.btn-warning.disabled(id="gooutInputLabel", disabled, style="width: 500px;") Go out Input Detail
+        button.btn.btn-large.btn-warning.disabled(id="gooutInputLabel", disabled, style="width: 500px;") 「外　出」　詳　細　入　力
       form.form.horisontal(method="post", action="/schedule/chg_status", style="margin-bottom: 0px;")
         .modal-body
           .control-group(style="margin-bottom: 0px;")

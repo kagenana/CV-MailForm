@@ -2,16 +2,16 @@ extends ../layout
 
 block content
   .container
-      h2 Account Profile
+      h2 アカウント作成
       form.form.horisontal#userEdit(method="post", action="/admin/account_conf")
         table.table.table-bordered.table-striped.table-hover
-          caption CV-MailForm Account in Databases
+          //caption CV-MailForm Account in Databases
           thead
             tr.table-bordered
-              th #
-              th.span2 Attribute
-              th.span5 Value
-              th.span5 Description
+              th.span1 #
+              th.span2 設定項目
+              th.span5 設定値
+              th.span5 備考
           tbody
             tr.control-group
               td 1
@@ -33,6 +33,7 @@ block content
               td.control-label password
               td.controls
                 input(type="password", id="password", name="password", placeholder="password", style="margin-bottom: 2px;", value="#{users.password}")
+                br
                 input(type="password", name="password_valid", placeholder="確認用再入力欄", style="margin-bottom: 0px;", value="#{users.password}")
               td パスワードを設定します。（確認のため2回入力して下さい。）
             tr.control-group
@@ -96,7 +97,7 @@ block content
               td 備考欄です。
         .control-group
           .controls
-            button.btn.btn-primary(type="submit") Edit
+            button.btn.btn-primary(type="submit") 作成
       script(type="text/javascript")
         $(function() {
           $('#userEdit').validate({

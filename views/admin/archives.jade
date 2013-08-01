@@ -2,19 +2,19 @@ extends ../layout
 
 block content
   .container
-      h2 Schedule List Archives (AllUser)
+      h2 入力履歴 アーカイブ(全ユーザ)
       table.table.table-bordered.table-striped.table-hover
-        caption CV-MailForm Active Schedule List
+        //caption CV-MailForm Active Schedule List
         .control-group
           thead
             tr.table-bordered
               th #
-              th.span3 User
-              th.span1 Status
-              th.span8 Description
-              th.span2 Leaving Time
-              th.span2 Return Time
-              th.span1 Mail
+              th.span3 ユーザ名（アカウント名）
+              th.span1 状態
+              th.span8 不在理由の詳細
+              th.span4 退席時刻
+              th.span4 戻り予定時刻
+              th.span1 通知
           tbody
             for schedule, i in schedules
               - var index = i +1
@@ -39,13 +39,13 @@ block content
                     p #{date}
                 td
                   if schedules[i].isState == "que"
-                    span.label.label-warning Que
+                    span.label.label-warning 保留
                   if schedules[i].isState == "sent"
-                    span.label.label-info Sent
+                    span.label.label-info 送信
                   if schedules[i].isState == "calcel"
-                    span.label.label-danger Cancel
+                    span.label.label-danger 取消
                   if schedules[i].isState == "archive"
-                    span.label.label-inverse archive
+                    span.label.label-inverse 未送
               - function encodeDate(date) {
                 - var y = date.getFullYear();
                 - var m = date.getMonth()+1;

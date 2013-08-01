@@ -1,33 +1,67 @@
-extends layout
+extends ./layout
 
 block content
   .container
-    .hero-unit
-      .row-fluid
-        .span9
-          h1= title
-          p Welcome to #{title}
-          h3 Debug info
-      pre
-        p session_id :#{session.id}
-        p user_keyid :#{session._id}
-        p userid :#{session.userid}
-        p name :#{session.name}
-        p isAdmin :#{session.isAdmin}
-        p isEnable :#{session.isEnable}
-        p isState :#{session.isState}
-        p messages :#{session.messages}
-        hr
-        script
-          var dates = new Date();
-          var year = dates.getFullYear();
-          var month = dates.getMonth()+1;
-          var week = dates.getDay();
-          var day = dates.getDate();
-          
-          var yobi= new Array("日","月","火","水","木","金","土");
-          
-          document.write("西暦"+year+"年"+month+"月"+day+"日 "+yobi[week]+"曜日");
-        p date: #{date}
-
+      h2 行動予定表
+      button.btn.btn-primary(onClick="location.href='/'")
+        i.icon-repeat.icon-white
+        | 　表示を更新する
+      | 　（60秒毎に自動的に更新されます。）
+      table.table.table-bordered.table-striped.table-hover
+        //caption 入力履歴
+        .control-group
+          thead
+            tr.table-bordered
+              th #
+              th.span3 ユーザ名（アカウント名）
+              th.span1 状態
+              th.span4 戻り予定時刻
+              th.span8 不在理由の詳細
+          tbody
+            - var author_old = ""
+            - var index = 0
+            for schedule, i in schedules
+              if schedules[i].author != author_old
+                - author_old = schedules[i].author
+                tr
+                  - index = index + 1
+                  td= index
+                  td= schedules[i].author
+                  td
+                    if schedules[i].subject == "left"
+                      span.label.label-success 離席中
+                    if schedules[i].subject == "goout"
+                      span.label.label-warning 外出中
+                    if schedules[i].subject == "exist"
+                      span.label.label-info 在席中
+                  td
+                    if(schedules[i].timeReturn)
+                      - var date = encodeDate(schedules[i].timeReturn)
+                      p #{date}
+                  td= schedules[i].Description
+                  
+                  
+              - function encodeDate(date) {
+                - var y = date.getFullYear();
+                - var m = date.getMonth()+1;
+                - var d = date.getDate();
+                - m = ('0' + m).slice(-2);
+                - d = ('0' + d).slice(-2);
+                - var hh = date.getHours()
+                - var mm = date.getMinutes();
+                - hh = ('0' + hh).slice(-2);
+                - mm = ('0' + mm).slice(-2);
+                - var w = date.getDay();
+                - var week = "";
+                - if (w == 0) week = "(日)";
+                - if (w == 1) week = "(月)";
+                - if (w == 2) week = "(火)";
+                - if (w == 3) week = "(水)";
+                - if (w == 4) week = "(木)";
+                - if (w == 5) week = "(金)";
+                - if (w == 6) week = "(土)";
+                - return y + "/" + m + "/" + d + week + " " + hh + ":" + mm;
+              - };
+            script(language="JavaScript")
+              setTimeout("location.reload()",1000*60);
   #container

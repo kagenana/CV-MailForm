@@ -3,7 +3,7 @@ var model = require('../models/db.js');
     Server = model.Server,
     Schedule = model.Schedule;
 
-var TITLE = 'CV-MailForm Admin';
+var TITLE = 'オンライン行動予定表（仮）　管理メニュー';
 
 exports.index = function(req, res){
   res.render('admin/admin', { title: TITLE, session: session });
@@ -90,7 +90,7 @@ exports.account_conf = function(req, res){
           }
           else {
             req.session.isEnable = users.isEnable;
-            req.session.messages = ["Account is disabled."];
+            req.session.messages = ["このアカウントは無効にされています。"];
             res.redirect('/login');
           };
         };
@@ -131,7 +131,7 @@ exports.account_conf = function(req, res){
         };
         if(obj){
           var mode = "new";
-          var duplicate = "id is duplication.";
+          var duplicate = "同じユーザ名が既に使用されています。";
           var session = req.session;
           res.render('admin/account_edit', { title: TITLE, session: session, users: users, mode: mode, duplicate: duplicate });
         }
@@ -199,7 +199,7 @@ exports.server_conf = function(req, res){
     obj[0].exist_template = req.body.exist_template;
 
     obj[0].save();
-    req.session.messages = ["Configuration Updated."];
+    req.session.messages = ["サーバの設定を変更しました。"];
     res.redirect('admin/server');
     
   });

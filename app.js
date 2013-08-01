@@ -48,19 +48,19 @@ app.configure('development', function(){
 });
 
 var loginCheck = function(req, res, next) {
-  console.log(req.session);
+    //console.log(req.session);
   if(req.session.name != null) {
-    console.log('stage1');
+      //console.log('stage1');
     if(!req.session.isEnable) {
-      console.log('stage2');
-      req.session.messages = ["Account is disabled."];
+        //console.log('stage2');
+      req.session.messages = ["このアカウントは無効にされています。"];
       res.redirect('/login');
     };
-    console.log('stage3');
+      //console.log('stage3');
     next();
   }
   else {
-    console.log('stage4');
+      //console.log('stage4');
     req.session.destroy();
       //req.session.messages = ["Session Time Out."];
     res.redirect('/login');
@@ -76,7 +76,7 @@ var adminCheck = function(req, res, next) {
   }
 };
 
-app.get('/', loginCheck, schedule.index);
+app.get('/', loginCheck, routes.index);
 app.get('/login', routes.login);
 app.post('/signup', routes.signup);
 app.get('/logout', routes.logout);

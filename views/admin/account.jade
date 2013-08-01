@@ -2,20 +2,21 @@ extends ../layout
 
 block content
   .container
-      h2 Account Management
+      h2 アカウント管理
       form.form.horisontal(method="post", action="/admin/account_edit")
         table.table.table-bordered.table-striped.table-hover
-          caption CV-MailForm User Account List
+          caption ユーザ一覧
           .control-group
             thead
               tr.table-bordered
                 th #
-                th.span1 id
-                th.span4 mail
-                th.span3 name
-                th.span1 isAdmin
-                th.span1 isEnable
-                th.span4 Description
+                th.span1 ユーザID
+                th.span4 メールアドレス
+                th.span3 フルネーム
+                th.span2 ニックネーム
+                th.span1 権限
+                th.span1 状態
+                th.span4 備考
                 th(style="text-align: right")
                   i.icon-plus-sign
                 th
@@ -29,16 +30,17 @@ block content
                   td= users[i].id
                   td= users[i].mail
                   td= users[i].name
+                  td= users[i].name_short
                   td
                     if users[i].isAdmin
-                      span.label.label-important Admin
+                      span.label.label-important 管理者
                     else
-                      span.label.label-success User
+                      span.label.label-success 一般
                   td
                     if users[i].isEnable
-                      span.label.label-info Enable
+                      span.label.label-info 有効
                     else
-                      span.label.label-important Disable
+                      span.label.label-important 無効
                   td= users[i].Description
                   td
                     .control

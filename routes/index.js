@@ -3,13 +3,23 @@ var model = require('../models/db.js');
     Server = model.Server,
     Schedule = model.Schedule;
 
-var TITLE = 'CV-MailForm';
+var TITLE = 'オンライン行動予定表（仮）';
 
 exports.index = function(req, res){
-  var date1 = new Date();
-  var date = encodeDate(date1);
-  var session = req.session;
-  res.render('index', { title: TITLE, session: session, date: date });
+  var today = new Date();
+  today.setHours(8,0,0);
+  Schedule.find({
+    timeSubmit: { $gt: today }
+  },
+  {},
+  { sort: [['author', 1],['timeSubmit', -1]] },
+  function(err, schedules){
+    if(err){
+      console.log(err);
+    };
+    var session = req.session;
+    res.render('index', { title: TITLE, session: session, schedules: schedules });
+  });
 };
 
 exports.login = function(req, res){
@@ -23,7 +33,7 @@ exports.signup = function(req, res){
   },
   function(err,obj){
     if(obj){
-      console.log('stage5');
+        //console.log('stage5');
       req.session._id = obj._id;
       req.session.userid = obj.id;
       req.session.name = obj.name;
@@ -33,12 +43,12 @@ exports.signup = function(req, res){
       req.session.isEnable = obj.isEnable;
       req.session.isState = obj.isState;
       res.redirect('/');
-      console.log(req.session);
+        //console.log(req.session);
     }
     else {
-      console.log('stage6');
+        //console.log('stage6');
       console.log(err);
-      req.session.messages = ["Cannot Login."];
+      req.session.messages = ["入力情報が異なります。"];
       res.redirect('/login');
     }
   });

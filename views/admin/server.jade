@@ -2,7 +2,7 @@ extends ../layout
 
 block content
   .container
-      h2 Sever Configuration
+      h2 サーバ設定
       - if(messages)
           each message in messages
             .alert.alert-success
@@ -10,13 +10,13 @@ block content
               | #{messages}
       form.form.horisontal#serverConf(method="post", action="/admin/server_conf")
         table.table.table-bordered.table-striped.table-hover
-          caption CV-MailForm Configuration in Databases
+          //caption CV-MailForm Configuration in Databases
           thead
             tr.table-bordered
-              th #
-              th.span2 Attribute
-              th.span5 Value
-              th.span5 Description
+              th.span1 #
+              th.span2 設定項目
+              th.span5 設定値
+              th.span8 備考
           tbody
             tr.control-group
               td 1
@@ -82,29 +82,29 @@ block content
                   else
                     input(type="checkbox", name="mail_reply_to_user", value="true")
               td 返信先をユーザのアドレスにするか選択します。
+            //tr.control-group
+                td 10
+                td.control-label send_to_min_before
+                td.controls
+                  input(type="text", name="send_to_min_before", placeholder="30", style="margin-bottom: 0px;", value="#{servers[0].send_to_min_before}")
+                td 何分前に送信するかを設定します。（指定単位：分）
+            //tr.control-group
+                td 11
+                td.control-label archive_of_day 
+                td.controls
+                  input(type="text", name="archive_of_day", placeholder="365", style="margin-bottom: 0px;", value="#{servers[0].archive_of_day}")
+                td ログを何日間保存するかを指定します。（指定単位：日）
             tr.control-group
               td 10
-              td.control-label send_to_min_before
-              td.controls
-                input(type="text", name="send_to_min_before", placeholder="30", style="margin-bottom: 0px;", value="#{servers[0].send_to_min_before}")
-              td 何分前に送信するかを設定します。（指定単位：分）
-            tr.control-group
-              td 11
-              td.control-label archive_of_day 
-              td.controls
-                input(type="text", name="archive_of_day", placeholder="365", style="margin-bottom: 0px;", value="#{servers[0].archive_of_day}")
-              td ログを何日間保存するかを指定します。（指定単位：日）
-            tr.control-group
-              td 12
               td.control-label left_subject
               td.controls
                 input(type="text", name="left_subject", placeholder="退席連絡", style="margin-bottom: 0px;", value="#{servers[0].left_subject}")
               td 一時退席連絡の件名を指定します。
             tr.control-group
-              td 13
+              td 11
               td.control-label left_template 
               td.controls.controls-row
-                textarea.span5(rows="11", name="left_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].left_template}
+                textarea.span5(rows="25", name="left_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].left_template}
               td メッセージテンプレートを指定します。
                  p 以下の代入値を利用することが出来ます。
                  table.table.table-bordered.table-striped
@@ -140,16 +140,16 @@ block content
                          p 状態の詳細（会議など）
                          p (「設定しない」を選択時は記載されません。)
             tr.control-group
-              td 14
+              td 12
               td.control-label goout_subject
               td.controls
                 input(type="text", name="goout_subject", placeholder="外出連絡", style="margin-bottom: 0px;", value="#{servers[0].goout_subject}")
               td 外出連絡の件名を指定します。
             tr.control-group
-              td 15
+              td 13
               td.control-label goout_template 
               td.controls.controls-row
-                textarea.span5(rows="11", name="goout_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].goout_template}
+                textarea.span5(rows="25", name="goout_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].goout_template}
               td メッセージテンプレートを指定します。
                  p 以下の代入値を利用することが出来ます。
                  table.table.table-bordered.table-striped
@@ -185,16 +185,16 @@ block content
                          p 詳細(「〜のため」という形に編集されます。)
                          p (「設定しない」を選択時は記載されません。)
             //tr.control-group
-              td 16
+              td 14
               td.control-label custom_subject
               td.controls
                 input(type="text", name="custom_subject", placeholder="スケジュール連絡", style="margin-bottom: 0px;", value="#{servers[0].custom_subject}")
               td 詳細スケジュール入力時の件名を指定します。
             //tr.control-group
-              td 17
+              td 15
               td.control-label custom_template 
               td.controls.controls-row
-                textarea.span5(rows="11", name="custom_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].custom_template}
+                textarea.span5(rows="25", name="custom_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].custom_template}
               td メッセージテンプレートを指定します。
                  p 以下の代入値を利用することが出来ます。
                  table.table.table-bordered.table-striped
@@ -230,16 +230,16 @@ block content
                          p 詳細(「〜のため」という形に編集されます。)
                          p (「設定しない」を選択時は記載されません。)
             tr.control-group
-              td 18
+              td 16
               td.control-label exist_subject
               td.controls
                 input(type="text", name="exist_subject", placeholder="帰社連絡", style="margin-bottom: 0px;", value="#{servers[0].exist_subject}")
               td 帰社連絡の件名を指定します。
             tr.control-group
-              td 19
+              td 17
               td.control-label exist_template 
               td.controls.controls-row
-                textarea.span5(rows="11", name="exist_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].exist_template}
+                textarea.span5(rows="22", name="exist_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].exist_template}
               td メッセージテンプレートを指定します。
                  p 以下の代入値を利用することが出来ます。
                  table.table.table-bordered.table-striped

@@ -25,43 +25,43 @@ html
           .nav-collapse.collapse
             ul.nav
               li
-                a(href="/") Home
+                a(href="/") 行動予定表
               li.dropdown
-                a(class="dropdown-toggle", id="dLabel", role="button", data-toggle="dropdown", data-target="#", href="admin/#") Schedule
+                a(class="dropdown-toggle", id="dLabel", role="button", data-toggle="dropdown", data-target="#", href="schedule/#") スケジュール
                   b.caret
                 ul.dropdown-menu(role="menu", aria-labelledby="dLabel")
                   li
                     a(role="menuitem", tabindex="-1", href="/schedule/")
                       i.icon-calendar
-                      |  Schedule List
+                      |  スケジュール入力
                   li.divider(role="presentation")
                   li
                     a(role="menuitem", tabindex="-1", href="/schedule/archives")
                       i.icon-briefcase
-                      |  Archives
+                      |  スケジュール履歴
               if (session.isAdmin)
                 li.dropdown
-                  a(class="dropdown-toggle", id="dLabel", role="button", data-toggle="dropdown", data-target="#", href="admin/#") Admin
+                  a(class="dropdown-toggle", id="dLabel", role="button", data-toggle="dropdown", data-target="#", href="admin/#") 管理者設定
                     b.caret
                   ul.dropdown-menu(role="menu", aria-labelledby="dLabel")
                     li
                       a(role="menuitem", tabindex="-1", href="/admin/account")
                         i.icon-user
-                        |  Account Management
+                        |  アカウント管理
                     li
                       a(role="menuitem", tabindex="-1", href="/admin/server")
                         i.icon-wrench
-                        |  Server Configuration
+                        |  サーバ設定
                     li.divider(role="presentation")
                     li
                       a(role="menuitem", tabindex="-1", href="/admin/archives")
                         i.icon-briefcase
-                        |  View Archives
+                        |  アーカイブ
                     li.divider(role="presentation")
                     li
                       a(role="menuitem", tabindex="-1", href="#VerInfo", data-toggle="modal")
                         i.icon-info-sign
-                        |  Version Information
+                        |  バージョン情報
             ul.nav.pull-right
               li(style="text-align: right;")
                 a(role="menuitem", tabindex="-1", href="#", style="padding-right: 6px;")
@@ -84,14 +84,14 @@ html
               li
                 a(href="/logout")
                   i.icon-off.icon-white
-                  |  Logout
+                  |  ログアウト
     .modal.hide.fade(id="VerInfo", tabindex="-1", role="dialog", aria-labelledby="VerInfoLabel", aria-hidden="true")
       .modal-header
         button.close(type="button", data-dismiss="modal", aria-hidden="true")&times;
         h3(id="VerInfoLabel") Version Information
       .modal-body
-        h2 CV-MailForm
-        p Version.0.0.1
+        h2 オンライン行動予定表（仮）
+        p Version 0.1.0
         p
          a(href="/https://github.com/kagenana/CV-MailForm", target="_blank") https://github.com/kagenana/CV-MailForm
       .modal-footer
