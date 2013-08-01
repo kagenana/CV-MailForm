@@ -223,7 +223,7 @@ exports.archives = function(req, res){
     author_id: req.session._id
   },
   {},
-  { sort: [['timeSubmit', -1]] },
+  { sort: [['timeSubmit', -1]], limit: 100 },
   function(err, schedules){
     if(err){
       console.log(err);

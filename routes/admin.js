@@ -209,7 +209,7 @@ exports.archives = function(req, res){
   Schedule.find({
   },
   {},
-  { sort: [['timeSubmit', -1]] },
+  { sort: [['timeSubmit', -1]], limit: 500 },
   function(err, schedules){
     if(err){
       console.log(err);
