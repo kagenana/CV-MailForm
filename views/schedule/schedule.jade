@@ -41,7 +41,7 @@ block content
                 if session.isState == "exist"
                   button.btn.btn-primary(disabled)
                     i.icon-play
-                    |   戻　り
+                    |   在　席
                 else
                   form.form.horisontal(method="post", action="/schedule/chg_status", style="margin-bottom: 0px;")
                     .control-group(style="margin-bottom: 0px;")
@@ -64,7 +64,7 @@ block content
               tr.table-bordered
                 th #
                 th.span1 状態
-                th.span8 不在理由の詳細
+                th.span8 詳細
                 th.span3 退席時刻
                 th.span3 戻り予定時刻
                 th.span1 通知

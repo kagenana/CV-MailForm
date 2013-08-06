@@ -84,17 +84,17 @@ exports.account_conf = function(req, res){
       };
       
         //require logout
-      if (req.session._id == users._id) {
-        if (beforeEnable) {
-          if (users.isEneble) {
-          }
-          else {
-            req.session.isEnable = users.isEnable;
-            req.session.messages = ["このアカウントは無効にされています。"];
-            res.redirect('/login');
-          };
-        };
-      };
+        //if (req.session._id == users._id) {
+        //  if (beforeEnable) {
+        //    if (users.isEneble) {
+        //    }
+        //    else {
+        //      req.session.isEnable = users.isEnable;
+        //      req.session.messages = ["このアカウントは無効にされています。"];
+        //      res.redirect('/login');
+        //    };
+        //  };
+        //};
 
       if (req.session.isAdmin) {
         res.redirect('admin/account');
@@ -137,6 +137,19 @@ exports.account_conf = function(req, res){
         }
         else {
           users.save();
+          if (users.isEnable == true){
+            var schedules = new Schedule();
+            schedules.author_id = users._id;
+            schedules.subject = "exist";
+            schedules.author = users.name;
+            schedules.timeSubmit = Date.now();
+            schedules.timeRequest = Date.now();
+            schedules.timeReturn = null;
+            schedules.isState = "archive";
+            schedules.Description = "新規作成自動入力";
+            schedules.mailBody = "";
+            schedules.save();
+          };
           res.redirect('admin/account');
         };
       });

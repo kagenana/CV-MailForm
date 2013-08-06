@@ -35,7 +35,10 @@ block content
                 input(type="password", id="password", name="password", placeholder="password", style="margin-bottom: 2px;", value="#{users.password}")
                 br
                 input(type="password", name="password_valid", placeholder="確認用再入力欄", style="margin-bottom: 0px;", value="#{users.password}")
-              td パスワードを設定します。（確認のため2回入力して下さい。）
+              td
+                | パスワードを設定します。
+                br
+                | （確認のため2回入力して下さい。）
             tr.control-group
               td 3
               td.control-label mail
@@ -79,16 +82,19 @@ block content
               td.control-label isEnable
               td.controls
                   if users.id == "sysadmin"
-                    label.checkbox(title="プリセット管理者は操作できません。") アカウントを有効にします。
+                    label.checkbox(title="プリセット管理者は操作できません。") スケジュールを入力可能にする。
                       input(type="checkbox", name="isEnable", value="true", disabled, checked, title="プリセット管理者は操作できません。")
                     input(type="hidden", name="isEnable", placeholder="true", style="margin-bottom: 0px;", value="true")
                   else
-                    label.checkbox  アカウントを有効にします。
+                    label.checkbox   スケジュールを入力可能にする。
                       if users.isEnable
                         input(type="checkbox", name="isEnable", value="true", checked)
                       else
                         input(type="checkbox", name="isEnable", value="true")
-              td アカウントを有効にします。
+              td
+                | スケジュールを入力可能にします。
+                br
+                | 閲覧専用ユーザの場合チェックを外します。
             tr.control-group
               td 8
               td.control-label Description

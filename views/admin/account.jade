@@ -15,7 +15,7 @@ block content
                 th.span3 フルネーム
                 th.span2 ニックネーム
                 th.span1 権限
-                th.span1 状態
+                th.span1 機能
                 th.span4 備考
                 th(style="text-align: right")
                   i.icon-plus-sign
@@ -38,9 +38,9 @@ block content
                       span.label.label-success 一般
                   td
                     if users[i].isEnable
-                      span.label.label-info 有効
+                      span.label.label-info フル機能
                     else
-                      span.label.label-important 無効
+                      span.label.label-important 閲覧のみ
                   td= users[i].Description
                   td
                     .control

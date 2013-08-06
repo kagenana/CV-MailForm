@@ -26,19 +26,20 @@ html
             ul.nav
               li
                 a(href="/") 行動予定表
-              li.dropdown
-                a(class="dropdown-toggle", id="dLabel", role="button", data-toggle="dropdown", data-target="#", href="schedule/#") スケジュール
-                  b.caret
-                ul.dropdown-menu(role="menu", aria-labelledby="dLabel")
-                  li
-                    a(role="menuitem", tabindex="-1", href="/schedule/")
-                      i.icon-calendar
-                      |  スケジュール入力
-                  li.divider(role="presentation")
-                  li
-                    a(role="menuitem", tabindex="-1", href="/schedule/archives")
-                      i.icon-briefcase
-                      |  スケジュール履歴
+              if (session.isEnable)
+                li.dropdown
+                  a(class="dropdown-toggle", id="dLabel", role="button", data-toggle="dropdown", data-target="#", href="schedule/#") スケジュール
+                    b.caret
+                  ul.dropdown-menu(role="menu", aria-labelledby="dLabel")
+                    li
+                      a(role="menuitem", tabindex="-1", href="/schedule/")
+                        i.icon-calendar
+                        |  スケジュール入力
+                    li.divider(role="presentation")
+                    li
+                      a(role="menuitem", tabindex="-1", href="/schedule/archives")
+                        i.icon-briefcase
+                        |  スケジュール履歴
               if (session.isAdmin)
                 li.dropdown
                   a(class="dropdown-toggle", id="dLabel", role="button", data-toggle="dropdown", data-target="#", href="admin/#") 管理者設定

@@ -7,12 +7,12 @@ var TITLE = 'オンライン行動予定表（仮）';
 
 exports.index = function(req, res){
   var today = new Date();
-  today.setHours(8,0,0);
+  today.setHours(0,0,0);
   Schedule.find({
     timeSubmit: { $gt: today }
   },
   {},
-  { sort: [['author', 1],['timeSubmit', -1]] },
+  { sort: [['author_id', 1],['timeSubmit', -1]] },
   function(err, schedules){
     if(err){
       console.log(err);

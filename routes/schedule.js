@@ -7,11 +7,11 @@ var TITLE = 'オンライン行動予定表（仮）　ユーザメニュー';
 
 exports.index = function(req, res){
   var today = new Date();
-  today.setHours(8,0,0);
+  today.setHours(0,0,0);
   console.log(today.toString());
   Schedule.find({
     author_id: req.session._id,
-    $or: [{timeReturn: {$gt: today}},{timeSubmit: {$gt: today}}]
+    $or: [{timeSubmit: {$gt: today}}]
   },
   {},
   { sort: [['timeSubmit', -1]] },
@@ -140,7 +140,19 @@ exports.chg_status = function(req, res){
       text = text.replace(/%user%/g, req.session.name);
       text = text.replace(/%user_short%/g, req.session.name_short);
       text = text.replace(/%user_mail%/g, req.session.mail);
-      text = text.replace(/%state%/g, req.body.status);
+      
+      
+      
+      if (req.body.status == "left") {
+        var state_text = "離席";
+      };
+      if (req.body.status == "goout") {
+        var state_text = "外出";
+      };
+      if (req.body.status == "exist") {
+        var state_text = "在席";
+      };
+      text = text.replace(/%state%/g, state_text);
 
       var str = req.body.description;
       if (str == ""){
@@ -198,7 +210,7 @@ exports.chg_status = function(req, res){
       var schedules = new Schedule();
       schedules.author_id = req.session._id;
       schedules.subject = req.body.status;
-      schedules.author = req.session.name + " (" + req.session.userid + ")";
+      schedules.author = req.session.name;
       schedules.timeSubmit = Date.now();
       schedules.timeRequest = Date.now();
       if (req.body.timeReturn) {

@@ -51,11 +51,11 @@ var loginCheck = function(req, res, next) {
     //console.log(req.session);
   if(req.session.name != null) {
       //console.log('stage1');
-    if(!req.session.isEnable) {
+      //if(!req.session.isEnable) {
         //console.log('stage2');
-      req.session.messages = ["このアカウントは無効にされています。"];
-      res.redirect('/login');
-    };
+        //req.session.messages = ["このアカウントは無効にされています。"];
+        //res.redirect('/login');
+      //};
       //console.log('stage3');
     next();
   }
@@ -76,17 +76,26 @@ var adminCheck = function(req, res, next) {
   }
 };
 
+var enableCheck = function(req, res, next) {
+  if(req.session.isEnable) {
+    next();
+  }
+  else {
+    res.redirect('/');
+  }
+};
+
 app.get('/', loginCheck, routes.index);
 app.get('/login', routes.login);
 app.post('/signup', routes.signup);
 app.get('/logout', routes.logout);
 app.post('/account', loginCheck, routes.account);
 
-app.get('/schedule', loginCheck, schedule.index);
-app.post('/schedule/input', loginCheck, schedule.input);
-app.post('/schedule/input_post', loginCheck, schedule.input_post);
-app.get('/schedule/archives', loginCheck, schedule.archives);
-app.post('/schedule/chg_status', loginCheck, schedule.chg_status);
+app.get('/schedule', loginCheck, enableCheck, schedule.index);
+app.post('/schedule/input', loginCheck, enableCheck, schedule.input);
+app.post('/schedule/input_post', loginCheck, enableCheck, schedule.input_post);
+app.get('/schedule/archives', loginCheck, enableCheck, schedule.archives);
+app.post('/schedule/chg_status', loginCheck, enableCheck, schedule.chg_status);
 
 app.get('/admin', loginCheck, adminCheck, admin.index);
 app.get('/admin/account', loginCheck, adminCheck, admin.account);
