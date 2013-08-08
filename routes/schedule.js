@@ -3,7 +3,7 @@ var model = require('../models/db.js');
     Server = model.Server,
     Schedule = model.Schedule;
 
-var TITLE = 'オンライン行動予定表（仮）　ユーザメニュー';
+var TITLE = '株式会社コンバージョン　スケジュールボード　ユーザメニュー';
 
 exports.index = function(req, res){
   var today = new Date();
@@ -132,6 +132,10 @@ exports.chg_status = function(req, res){
         msg.subject = obj[0].goout_subject;
         text = obj[0].goout_template;
       };
+      if (req.body.status == "absence") {
+        msg.subject = obj[0].absence_subject;
+        text = obj[0].absence_template;
+      };
       if (req.body.status == "exist") {
         msg.subject = obj[0].exist_subject;
         text = obj[0].exist_template;
@@ -148,6 +152,9 @@ exports.chg_status = function(req, res){
       };
       if (req.body.status == "goout") {
         var state_text = "外出";
+      };
+      if (req.body.status == "absence") {
+        var state_text = "不在";
       };
       if (req.body.status == "exist") {
         var state_text = "在席";
@@ -204,9 +211,7 @@ exports.chg_status = function(req, res){
       }
 
       msg.text = text;
-      
-      sendMail(msg);
-      
+            
       var schedules = new Schedule();
       schedules.author_id = req.session._id;
       schedules.subject = req.body.status;
@@ -219,12 +224,22 @@ exports.chg_status = function(req, res){
       else {
         schedules.timeReturn = null;
       };
-      schedules.isState = "sent";
+      
+      var limit_date = new Date();
+      limit_date.setHours(18,0,0);
+      if (Date.now() < limit_date) {
+        req.session.messages = ["在席状態を更新し、通知メールを送信しました。"];
+        sendMail(msg);
+        schedules.isState = "sent";
+      }
+      else {
+        req.session.messages = ["在席状態を更新しましたが、通知メールは未送信です。（18:00まで）"];
+        schedules.isState = "archive";
+      };
       schedules.Description = req.body.description;
       schedules.mailBody = msg;
       schedules.save();
       
-      req.session.messages = ["在席状態を更新し、通知メールを送信しました。"];
       res.redirect('schedule/');
     });
   });

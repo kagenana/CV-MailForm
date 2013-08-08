@@ -3,7 +3,7 @@ var model = require('../models/db.js');
     Server = model.Server,
     Schedule = model.Schedule;
 
-var TITLE = 'オンライン行動予定表（仮）';
+var TITLE = '株式会社コンバージョン　スケジュールボード';
 
 exports.index = function(req, res){
   var today = new Date();

@@ -3,7 +3,7 @@ var model = require('../models/db.js');
     Server = model.Server,
     Schedule = model.Schedule;
 
-var TITLE = 'オンライン行動予定表（仮）　管理メニュー';
+var TITLE = '株式会社コンバージョン　スケジュールボード　管理メニュー';
 
 exports.index = function(req, res){
   res.render('admin/admin', { title: TITLE, session: session });
@@ -210,6 +210,8 @@ exports.server_conf = function(req, res){
     obj[0].custom_template = req.body.custom_template;
     obj[0].exist_subject = req.body.exist_subject;
     obj[0].exist_template = req.body.exist_template;
+    obj[0].absence_subject = req.body.absence_subject;
+    obj[0].absence_template = req.body.absence_template;
 
     obj[0].save();
     req.session.messages = ["サーバの設定を変更しました。"];

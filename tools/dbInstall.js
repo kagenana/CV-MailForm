@@ -35,7 +35,9 @@ var server = [
     custom_subject: '',
     custom_template: '',
     exist_subject: '',
-    exist_template: ''
+    exist_template: '',
+    absence_subject: '',
+    absence_template: ''
     }
 ];
 

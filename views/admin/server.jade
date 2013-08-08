@@ -229,6 +229,55 @@ block content
                        td
                          p 詳細(「〜のため」という形に編集されます。)
                          p (「設定しない」を選択時は記載されません。)
+
+
+            tr.control-group
+              td 16
+              td.control-label absence_subject
+              td.controls
+                input(type="text", name="absence_subject", placeholder="不在連絡", style="margin-bottom: 0px;", value="#{servers[0].absence_subject}")
+              td 不在連絡の件名を指定します。
+            tr.control-group
+              td 17
+              td.control-label absence_template 
+              td.controls.controls-row
+                textarea.span5(rows="22", name="absence_template", placeholder="Message Body", style="margin-bottom: 0px;") #{servers[0].absence_template}
+              td メッセージテンプレートを指定します。
+                 p 以下の代入値を利用することが出来ます。
+                 table.table.table-bordered.table-striped
+                   caption 代入値一覧
+                   tbody
+                     tr
+                       td %user%
+                       td ユーザ名（フルネーム）
+                     tr
+                       td %user_short%
+                       td ユーザ名（短縮）
+                     tr
+                       td %user_mail%
+                       td ユーザのメールアドレス
+                     tr
+                       td %left%
+                       td
+                         p 退席開始時間 (0分の場合、時間のみ出力)
+                         p (現時点では入力時の時間を設定します。)
+                     tr
+                       td %return%
+                       td
+                         p 帰社予定時間 (0分の場合、時間のみ出力)
+                         p (未入力時は「未定」と設定されます。)
+                     tr
+                       td %state%
+                       td 状態（離席・外出・帰社）
+                     tr
+                       td %description%
+                       td
+                         p 詳細(「〜のため」という形に編集されます。)
+                         p (「設定しない」を選択時は記載されません。)
+
+
+
+
             tr.control-group
               td 16
               td.control-label exist_subject

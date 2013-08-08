@@ -9,6 +9,8 @@ block content
         button.btn.btn-large.btn-success.disabled(disabled, style="width: 400px;") 現　在　「離　席　中」　で　す。
       if session.isState == "goout"
         button.btn.btn-large.btn-warning.disabled(disabled, style="width: 400px;") 現　在　「外　出　中」　で　す。
+      if session.isState == "absence"
+        button.btn.btn-large.btn-danger.disabled(disabled, style="width: 400px;") 現　在　「不　在」　で　す。
       table.table.table-bordered.table-striped.table-hover(style="width: 400px;, margin-bottom: 0px; margin-top: 3px;")
           tbody
             tr.table-bordered
@@ -30,6 +32,15 @@ block content
                   button.btn.btn-warning(disabled)
                     i.icon-stop
                     |   外　出
+              td(style="text-align: center;")
+                if session.isState == "exist"
+                  a.button.btn.btn-danger(href="#Inputabsence", data-toggle="modal")
+                    i.icon-eject.icon-white
+                    |   不　在
+                else
+                  button.btn.btn-danger(disabled)
+                    i.icon-eject
+                    |   不　在
               //td(style="text-align: center;")
                 form.form.horisontal(method="post", action="/schedule/input", style="margin-bottom: 0px;")
                     .control-group(style="margin-bottom: 0px;")
@@ -80,6 +91,8 @@ block content
                       span.label.label-success 離席中
                     if schedules[i].subject == "goout"
                       span.label.label-warning 外出中
+                    if schedules[i].subject == "absence"
+                      span.label.label-important 不　在
                     if schedules[i].subject == "exist"
                       span.label.label-info 在席中
                   td= schedules[i].Description
@@ -195,9 +208,49 @@ block content
                     option(value="", selected) 指定なし
                     option(value="客先打ち合わせ") 客先打ち合わせ
                     option(value="現場作業") 現場作業
-                    option(value="出張") 出張
-                    option(value="休暇") 休暇
+                    option(value="食事") 食事
                     input(type="hidden", name="status", placeholder="status", style="margin-bottom: 0px;", value="goout")
+              td 予定の詳細を選択します。
+            tr.control-group
+              td.controls
+                .input-append.date.form_datetime(title="カレンダーをクリックして編集します。")
+                  input(type="text", name="timeReturn", placeholder="戻り未定", style="margin-bottom: 0px;", value="", readonly)
+                  span.add-on
+                    i.icon-remove
+                  span.add-on
+                    i.icon-time
+                label.checkbox(style="margin-left: 198px;") 終日予定
+                  input(type="checkbox", name="fulltime", value="true")
+              td
+                p 帰社予定時間を記載します。
+                pre
+                 | 未定:時刻をクリアしてください。
+                 | 終日:時刻は無視されます。
+        .modal-footer
+          .control-group(style="margin-bottom: 0px;")
+            .control
+              button.btn(type="button", data-dismiss="modal", aria-hidden="true") Close
+              button.btn.btn-primary(type="submit") Submit
+
+    .modal.hide.fade(id="Inputabsence", tabindex="-1", role="dialog", aria-labelledby="absenceInputLabel", aria-hidden="true")
+      .modal-header
+        button.close(type="button", data-dismiss="modal", aria-hidden="true")&times;
+        button.btn.btn-large.btn-danger.disabled(id="absenceInputLabel", disabled, style="width: 500px;") 「不　在」　詳　細　入　力
+      form.form.horisontal(method="post", action="/schedule/chg_status", style="margin-bottom: 0px;")
+        .modal-body
+          .control-group(style="margin-bottom: 0px;")
+            .control
+        table.table.table-bordered.table-striped.table-hover
+          tbody
+            tr.control-group
+              td.controls
+                select(style="margin-bottom: 0px;", name="description")
+                    option(value="", selected) 指定なし
+                    option(value="休暇") 休暇
+                    option(value="代休") 代休
+                    option(value="出張") 出張
+                    option(value="研修") 研修
+                    input(type="hidden", name="status", placeholder="status", style="margin-bottom: 0px;", value="absence")
               td 予定の詳細を選択します。
             tr.control-group
               td.controls

@@ -25,7 +25,7 @@ html
           .nav-collapse.collapse
             ul.nav
               li
-                a(href="/") 行動予定表
+                a(href="/") スケジュールボード
               if (session.isEnable)
                 li.dropdown
                   a(class="dropdown-toggle", id="dLabel", role="button", data-toggle="dropdown", data-target="#", href="schedule/#") スケジュール
@@ -72,6 +72,8 @@ html
                     i.icon-pause.icon-white
                   if session.isState == "goout"
                     i.icon-stop.icon-white
+                  if session.isState == "absence"
+                    i.icon-eject.icon-white
               li
                 form.form.horisontal(method="post", action="/account", style="margin-top: 0px; margin-bottom: 0px; margin-top: 0px;padding-top: 4px;")
                   .control-group(style=style="margin: 0px;")
@@ -82,6 +84,8 @@ html
                         button.btn.btn-success.btn-mini(type="submit", name="_id", value="#{session._id}") #{session.name}
                       if session.isState == "goout"
                         button.btn.btn-warning.btn-mini(type="submit", name="_id", value="#{session._id}") #{session.name}
+                      if session.isState == "absence"
+                        button.btn.btn-danger.btn-mini(type="submit", name="_id", value="#{session._id}") #{session.name}
               li
                 a(href="/logout")
                   i.icon-off.icon-white

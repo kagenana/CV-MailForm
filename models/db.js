@@ -29,7 +29,9 @@ var ServerSchema = new mongoose.Schema({
     custom_subject: String,
     custom_template: String,
     exist_subject: String,
-    exist_template: String
+    exist_template: String,
+    absence_subject: String,
+    absence_template: String
     
 },{collection: 'server'});
 exports.Server = db.model('Server', ServerSchema);

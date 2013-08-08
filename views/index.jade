@@ -2,7 +2,7 @@ extends ./layout
 
 block content
   .container
-      h2 行動予定表
+      h2 スケジュールボード
       button.btn.btn-primary(onClick="location.href='/'")
         i.icon-repeat.icon-white
         | 　表示を更新する
@@ -33,6 +33,8 @@ block content
                       span.label.label-success 離席中
                     if schedules[i].subject == "goout"
                       span.label.label-warning 外出中
+                    if schedules[i].subject == "absence"
+                      span.label.label-important 不　在
                     if schedules[i].subject == "exist"
                       span.label.label-info 在席中
                   td

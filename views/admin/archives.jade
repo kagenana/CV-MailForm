@@ -26,6 +26,8 @@ block content
                     span.label.label-success 離席
                   if schedules[i].subject == "goout"
                     span.label.label-warning 外出
+                  if schedules[i].subject == "absence"
+                    span.label.label-important 不在
                   if schedules[i].subject == "exist"
                     span.label.label-info 在席
                 td= schedules[i].Description
