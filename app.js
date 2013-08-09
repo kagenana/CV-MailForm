@@ -7,9 +7,15 @@ var express = require('express'),
     routes = require('./routes/index'),
     admin = require('./routes/admin'),
     schedule = require('./routes/schedule'),
-    http = require('http'),
+    https = require('https'),
+    fs =require('fs'),
     path = require('path'),
     MongoStore = require('connect-mongo')(express);
+
+var opts = {
+  key: fs.readFileSync('./ssl/key.pem'),
+  cert: fs.readFileSync('./ssl/cert.pem')
+};
 
 var flash = require('connect-flash');
 var app = express();
@@ -108,6 +114,6 @@ app.post('/admin/server_conf', loginCheck, adminCheck, admin.server_conf);
 
 app.get('/admin/archives', loginCheck, adminCheck, admin.archives);
 
-http.createServer(app).listen(app.get('port'), function(){
+https.createServer(opts, app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
