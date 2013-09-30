@@ -1,6 +1,7 @@
   // daily batch "# node dailyBatch.js on TaskScheduler or crontab"
   // 0 8 * * * node /usr/local/CV-MailForm/tools/dailyBatch.js
-console.log("Script Start.");
+var dd = Date.now();
+console.log(dd.toLocaleString() + " : Script Start.");
 setTimeout(function(){
   var domain = 'localhost';
   var mongoose = require('mongoose');
@@ -44,6 +45,14 @@ setTimeout(function(){
   setTimeout(function() {
     console.log("DB Execute Start.");
     setTimeout(function() {
+      setTimeout(function() {
+        console.log("Session Store clear Start.");
+        var mongoskin = require('mongoskin');
+        var db2 = mongoskin.db('localhost:27017/session');
+        db2.collection('sessions').remove({});
+        db2.close();
+        console.log("Session Store clear End.");
+      }, 5000);
       User.find({ isEnable: true }, function(err, users){
         if(err){
           console.log(err);
@@ -71,9 +80,10 @@ setTimeout(function(){
           mongoose.disconnect();
           console.log("DB Disconnect.");
           setTimeout(function() {
-            console.log("Script End.");
+            var dd = Date.now();
+            console.log(dd.toLocaleString() + " : Script End.");
           }, 1000);
-        }, 30000);
+        }, 5000);
       });
     }, 1000);
   }, 1000);

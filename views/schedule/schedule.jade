@@ -4,14 +4,14 @@ block content
   .container
       h2 在席状況管理
       if session.isState == "exist"
-        button.btn.btn-large.btn-primary.disabled(disabled, style="width: 400px;") 現　在　「在　席　中」　で　す。
+        button.btn.btn-large.btn-primary.disabled(disabled, style="width: 450px;") 現　在　「在　席　中」　で　す。
       if session.isState == "left"
-        button.btn.btn-large.btn-success.disabled(disabled, style="width: 400px;") 現　在　「離　席　中」　で　す。
+        button.btn.btn-large.btn-success.disabled(disabled, style="width: 450px;") 現　在　「離　席　中」　で　す。
       if session.isState == "goout"
-        button.btn.btn-large.btn-warning.disabled(disabled, style="width: 400px;") 現　在　「外　出　中」　で　す。
+        button.btn.btn-large.btn-warning.disabled(disabled, style="width: 450px;") 現　在　「外　出　中」　で　す。
       if session.isState == "absence"
-        button.btn.btn-large.btn-danger.disabled(disabled, style="width: 400px;") 現　在　「不　在」　で　す。
-      table.table.table-bordered.table-striped.table-hover(style="width: 400px;, margin-bottom: 0px; margin-top: 3px;")
+        button.btn.btn-large.btn-danger.disabled(disabled, style="width: 450px;") 現　在　「不　在」　で　す。
+      table.table.table-bordered.table-striped.table-hover(style="width: 450px;, margin-bottom: 0px; margin-top: 3px;")
           tbody
             tr.table-bordered
               td(style="text-align: center;")
@@ -79,8 +79,8 @@ block content
                 th.span3 退席時刻
                 th.span3 戻り予定時刻
                 th.span1 通知
-                th.span1 編集
-                th.span1 取消
+                  //th.span1 編集
+                  //th.span1 取消
             tbody
               for schedule, i in schedules
                 - var index = i +1
@@ -113,7 +113,7 @@ block content
                       span.label.label-danger 取消
                     if schedules[i].isState == "archive"
                       span.label.label-inverse 未送
-                  td
+                  //td
                     if schedules[i].isState == "que"
                       form.form.horisontal(method="post", action="/schedule/input", style="margin-bottom: 0px;")
                         .control-group(style="margin-bottom: 0px;")
@@ -122,7 +122,7 @@ block content
                             button.btn.btn-success.btn-mini Edit
                     else
                       button.btn.btn-success.btn-mini(disabled) Edit
-                  td
+                  //td
                     if schedules[i].isState == "que"
                       form.form.horisontal(method="post", action="/schedule/input", style="margin-bottom: 0px;")
                         .control-group(style="margin-bottom: 0px;")
@@ -152,6 +152,7 @@ block content
                   - if (w == 6) week = "(土)";
                   - return y + "/" + m + "/" + d + week + " " + hh + ":" + mm;
                 - };
+
     .modal.hide.fade(id="Inputleft", tabindex="-1", role="dialog", aria-labelledby="leftInputLabel", aria-hidden="true")
       .modal-header
         button.close(type="button", data-dismiss="modal", aria-hidden="true")&times;
@@ -189,8 +190,8 @@ block content
         .modal-footer
           .control-group(style="margin-bottom: 0px;")
             .control
-              button.btn(type="button", data-dismiss="modal", aria-hidden="true") Close
-              button.btn.btn-primary(type="submit") Submit
+              button.btn(type="button", data-dismiss="modal", aria-hidden="true") キャンセル
+              button.btn.btn-primary(type="submit") 決定
       
     .modal.hide.fade(id="Inputgoout", tabindex="-1", role="dialog", aria-labelledby="gooutInputLabel", aria-hidden="true")
       .modal-header
@@ -229,8 +230,8 @@ block content
         .modal-footer
           .control-group(style="margin-bottom: 0px;")
             .control
-              button.btn(type="button", data-dismiss="modal", aria-hidden="true") Close
-              button.btn.btn-primary(type="submit") Submit
+              button.btn(type="button", data-dismiss="modal", aria-hidden="true") キャンセル
+              button.btn.btn-primary(type="submit") 決定
 
     .modal.hide.fade(id="Inputabsence", tabindex="-1", role="dialog", aria-labelledby="absenceInputLabel", aria-hidden="true")
       .modal-header
@@ -270,8 +271,8 @@ block content
         .modal-footer
           .control-group(style="margin-bottom: 0px;")
             .control
-              button.btn(type="button", data-dismiss="modal", aria-hidden="true") Close
-              button.btn.btn-primary(type="submit") Submit
+              button.btn(type="button", data-dismiss="modal", aria-hidden="true") キャンセル
+              button.btn.btn-primary(type="submit") 決定
 
     script(type="text/javascript")
       $(function() {
@@ -288,9 +289,9 @@ block content
           format: 'yyyy/mm/dd hh:ii',
           startView: 1,
           autoclose: true,
+          minuteStep: 30,
           pickerPosition: "bottom-left"
         });
       });
-      
       
   #container

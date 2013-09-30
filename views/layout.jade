@@ -2,8 +2,9 @@ doctype 5
 html
   head
     title= title
-    link(rel="stylesheet", href="/stylesheets/bootstrap.min.css" ,type="text/css")
-    link(rel="stylesheet", href="/stylesheets/bootstrap-responsive.min.css" ,type="text/css")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="/stylesheets/bootstrap.min.css" ,type="text/css", media="screen")
+    link(rel="stylesheet", href="/stylesheets/bootstrap-responsive.min.css" ,type="text/css", rel="stylesheet")
     link(rel="stylesheet", href="/stylesheets/ui-lightness/jquery-ui-1.10.3.custom.min.css" ,type="text/css")
     link(rel="stylesheet", href="/stylesheets/datetimepicker.css" ,type="text/css")
     link(rel="stylesheet", href="/stylesheets/style.css" ,type="text/css")
@@ -95,10 +96,10 @@ html
         button.close(type="button", data-dismiss="modal", aria-hidden="true")&times;
         h3(id="VerInfoLabel") Version Information
       .modal-body
-        h2 オンライン行動予定表（仮）
-        p Version 0.1.0
+        h2 オンラインスケジュールボード
+        p Version 1.1.0
         p
-         a(href="/https://github.com/kagenana/CV-MailForm", target="_blank") https://github.com/kagenana/CV-MailForm
+         a(href="https://github.com/kagenana/Online-Schedule-Board", target="_blank") https://github.com/kagenana/Online-Schedule-Board
       .modal-footer
         button.btn(data-dismiss="modal", aria-hidden="true") Close
     block content

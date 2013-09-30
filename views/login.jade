@@ -19,7 +19,7 @@ html
         margin-top: 50px;
       }
       .form-login {
-        width: 300px;
+        width: 350px;
         padding-top: 20px;
         padding-bottom: 20px;
         padding-left: 40px;
@@ -43,12 +43,12 @@ html
                     .form-login-validate= messages
             form#loginForm(method="post", action="/signup")
               label
-                b User ID
-              input(type="text", name="id", placeholder="Account ID")
+                b ユーザID
+              input(type="text", name="id", placeholder="ユーザID")
               label
-                b Password
+                b パスワード
               
-              input(type="password", name="password", placeholder="Password")
+              input(type="password", name="password", placeholder="パスワード")
                 //label.checkbox Keep Login
                     input(type="checkbox")
               br
